@@ -2,8 +2,8 @@
   pk:
     id: 'PK_GENERATE(online_user_key)'
   fields:
-    name: gr5
+    name: p68
     auth_account_id: abc
-    ipaddress: Dolorem in est rem numquam esse reprehenderit.
-    macaddress: Voluptas velit at non eum.
-    created_at: 1996-05-28T10:35:05+08:00
+    ipaddress: Nulla sit ipsum.
+    macaddress: Corporis assumenda qui aut sunt.
+    created_at: 1987-05-21T11:12:42+08:00

@@ -28,6 +28,19 @@ fields:
   restrictions:
     minlength: 8
     maxlength: 250
+- name: sex
+  description: 性别
+  label: 性别
+  type: string
+  required: true
+  readonly: true
+  unique: true
+  restrictions:
+    enumerations:
+    - label: 男
+      value: male
+    - label: 女
+      value: female
 - name: description
   description: 描述
   label: 描述

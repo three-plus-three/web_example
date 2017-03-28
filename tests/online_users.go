@@ -51,15 +51,15 @@ func (t OnlineUsersTest) TestCreate() {
 	t.ClearTable("tpt_online_users")
 	v := url.Values{}
 
-	v.Set("onlineUser.Name", "5zj")
+	v.Set("onlineUser.Name", "37i")
 
 	v.Set("onlineUser.AuthAccountID", "abc")
 
-	v.Set("onlineUser.Ipaddress", "Quo assumenda repellat ipsam similique aliquid.")
+	v.Set("onlineUser.Ipaddress", "Rerum nihil architecto officiis placeat voluptate.")
 
-	v.Set("onlineUser.Macaddress", "Sunt accusantium quis facilis molestiae labore vero.")
+	v.Set("onlineUser.Macaddress", "Hic consequatur officiis.")
 
-	v.Set("onlineUser.CreatedAt", "1984-07-23T08:57:14+08:00")
+	v.Set("onlineUser.CreatedAt", "2002-01-19T22:16:25+08:00")
 
 	t.Post(t.ReverseUrl("OnlineUsers.Create"), "application/x-www-form-urlencoded", strings.NewReader(v.Encode()))
 	t.AssertOk()
@@ -113,15 +113,15 @@ func (t OnlineUsersTest) TestUpdate() {
 	v.Set("_method", "PUT")
 	v.Set("onlineUser.ID", strconv.FormatInt(ruleId, 10))
 
-	v.Set("onlineUser.Name", "1tp")
+	v.Set("onlineUser.Name", "65c")
 
 	v.Set("onlineUser.AuthAccountID", "abc")
 
-	v.Set("onlineUser.Ipaddress", "Repellendus iusto veniam ut pariatur.")
+	v.Set("onlineUser.Ipaddress", "Eos quo voluptate.")
 
-	v.Set("onlineUser.Macaddress", "Neque voluptates consectetur ea.")
+	v.Set("onlineUser.Macaddress", "In at labore fuga quos.")
 
-	v.Set("onlineUser.CreatedAt", "1983-04-30T19:08:51+08:00")
+	v.Set("onlineUser.CreatedAt", "1985-07-20T20:19:27+08:00")
 
 	t.Post(t.ReverseUrl("OnlineUsers.Update"), "application/x-www-form-urlencoded", strings.NewReader(v.Encode()))
 	t.AssertOk()

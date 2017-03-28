@@ -20,6 +20,7 @@
       <tr>
         <th><input type="checkbox" id="auth_accounts-all-checker"></th>
         <th><nobr>用户名</nobr></th>
+        <th><nobr>性别</nobr></th>
         <th><nobr>描述</nobr></th>
         <th><nobr>创建时间</nobr></th>
         <th><nobr>修改时间</nobr></th>
@@ -31,6 +32,7 @@
         <td><input type="checkbox" class="auth_accounts-row-checker" key="{{$v.ID}}" url="{{url "AuthAccounts.Edit" $v.ID}}"></td>
         
         <td>{{$v.Name}}</td>
+        <td>{{$v.Sex}}</td>
         <td>{{$v.Description}}</td>
         <td>{{$v.CreatedAt}}</td>
         <td>{{$v.UpdatedAt}}</td>

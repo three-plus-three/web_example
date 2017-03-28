@@ -8,8 +8,8 @@ import (
 
 type OnlineUser struct {
 	ID            int       `json:"id" xorm:"id pk autoincr"`
-	Name          string    `json:"name" xorm:"name unique"`
-	AuthAccountID int64     `json:"auth_account_id" xorm:"auth_account_id"`
+	Name          string    `json:"name" xorm:"name unique notnull"`
+	AuthAccountID int64     `json:"auth_account_id" xorm:"auth_account_id notnull"`
 	Ipaddress     string    `json:"ipaddress,omitempty" xorm:"ipaddress"`
 	Macaddress    string    `json:"macaddress,omitempty" xorm:"macaddress"`
 	CreatedAt     time.Time `json:"created_at,omitempty" xorm:"created_at created"`
