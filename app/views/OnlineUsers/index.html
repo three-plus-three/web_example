@@ -33,9 +33,9 @@
         
         <td>{{$v.Name}}</td>
         <td>{{$v.AuthAccountID}}</td>
-        <td>{{$v.Ipaddress}}</td>
+        <td>{{$v.Hostaddress}}</td>
         <td>{{$v.Macaddress}}</td>
-        <td>{{$v.CreatedAt}}</td>
+        <td>{{datetime $v.CreatedAt}}</td>
         {{if current_user_has_write_permission $raw "online_users"}}<td>
           {{if current_user_has_edit_permission $raw "online_users"}}<a href='{{url "OnlineUsers.Edit" $v.ID}}'>编辑</a>{{end}}
           {{if current_user_has_del_permission $raw "online_users"}}<form id='online_users-delete-{{$v.ID}}' action="{{url "OnlineUsers.Delete" $v.ID}}" method="POST" class="form-horizontal" style='display:inline;'>

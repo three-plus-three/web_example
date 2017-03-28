@@ -20,6 +20,7 @@
       <tr>
         <th><input type="checkbox" id="auth_accounts-all-checker"></th>
         <th><nobr>用户名</nobr></th>
+        <th><nobr>邮箱</nobr></th>
         <th><nobr>性别</nobr></th>
         <th><nobr>描述</nobr></th>
         <th><nobr>创建时间</nobr></th>
@@ -32,10 +33,11 @@
         <td><input type="checkbox" class="auth_accounts-row-checker" key="{{$v.ID}}" url="{{url "AuthAccounts.Edit" $v.ID}}"></td>
         
         <td>{{$v.Name}}</td>
+        <td>{{$v.Email}}</td>
         <td>{{$v.Sex}}</td>
         <td>{{$v.Description}}</td>
-        <td>{{$v.CreatedAt}}</td>
-        <td>{{$v.UpdatedAt}}</td>
+        <td>{{datetime $v.CreatedAt}}</td>
+        <td>{{datetime $v.UpdatedAt}}</td>
         {{if current_user_has_write_permission $raw "auth_accounts"}}<td>
           {{if current_user_has_edit_permission $raw "auth_accounts"}}<a href='{{url "AuthAccounts.Edit" $v.ID}}'>编辑</a>{{end}}
           {{if current_user_has_del_permission $raw "auth_accounts"}}<form id='auth_accounts-delete-{{$v.ID}}' action="{{url "AuthAccounts.Delete" $v.ID}}" method="POST" class="form-horizontal" style='display:inline;'>

@@ -35,6 +35,7 @@ func (t AuthAccountsTest) TestIndex() {
 	}
 
 	t.AssertContains(fmt.Sprint(authAccount.Name))
+	t.AssertContains(fmt.Sprint(authAccount.Email))
 	t.AssertContains(fmt.Sprint(authAccount.Sex))
 	t.AssertContains(fmt.Sprint(authAccount.Description))
 }
@@ -50,17 +51,19 @@ func (t AuthAccountsTest) TestCreate() {
 	t.ClearTable("tpt_auth_accounts")
 	v := url.Values{}
 
-	v.Set("authAccount.Name", "1i5")
+	v.Set("authAccount.Name", "w0z")
 
-	v.Set("authAccount.Password", "tmts7x1bl")
+	v.Set("authAccount.Password", "p5ehps6gt")
 
-	v.Set("authAccount.Sex", "Et fugiat incidunt omnis rerum qui quia rerum.")
+	v.Set("authAccount.Email", "Sequi beatae omnis non.")
 
-	v.Set("authAccount.Description", "Quo error nihil accusantium veritatis dolorum.")
+	v.Set("authAccount.Sex", "Ut rem qui.")
 
-	v.Set("authAccount.CreatedAt", "2013-07-26T19:33:32+08:00")
+	v.Set("authAccount.Description", "Soluta et ullam perspiciatis voluptates.")
 
-	v.Set("authAccount.UpdatedAt", "2000-08-23T14:59:49+08:00")
+	v.Set("authAccount.CreatedAt", "1985-12-13T13:13:13+08:00")
+
+	v.Set("authAccount.UpdatedAt", "2011-10-22T05:57:12+08:00")
 
 	t.Post(t.ReverseUrl("AuthAccounts.Create"), "application/x-www-form-urlencoded", strings.NewReader(v.Encode()))
 	t.AssertOk()
@@ -77,6 +80,7 @@ func (t AuthAccountsTest) TestCreate() {
 
 	t.AssertEqual(fmt.Sprint(authAccount.Name), v.Get("authAccount.Name"))
 	t.AssertEqual(fmt.Sprint(authAccount.Password), v.Get("authAccount.Password"))
+	t.AssertEqual(fmt.Sprint(authAccount.Email), v.Get("authAccount.Email"))
 	t.AssertEqual(fmt.Sprint(authAccount.Sex), v.Get("authAccount.Sex"))
 	t.AssertEqual(fmt.Sprint(authAccount.Description), v.Get("authAccount.Description"))
 }
@@ -99,6 +103,7 @@ func (t AuthAccountsTest) TestEdit() {
 	fmt.Println(string(t.ResponseBody))
 
 	t.AssertContains(fmt.Sprint(authAccount.Name))
+	t.AssertContains(fmt.Sprint(authAccount.Email))
 	t.AssertContains(fmt.Sprint(authAccount.Sex))
 	t.AssertContains(fmt.Sprint(authAccount.Description))
 }
@@ -113,17 +118,19 @@ func (t AuthAccountsTest) TestUpdate() {
 	v.Set("_method", "PUT")
 	v.Set("authAccount.ID", strconv.FormatInt(ruleId, 10))
 
-	v.Set("authAccount.Name", "mg0")
+	v.Set("authAccount.Name", "97s")
 
-	v.Set("authAccount.Password", "23ch5sovt")
+	v.Set("authAccount.Password", "akyctmtqv")
 
-	v.Set("authAccount.Sex", "Voluptatem et aut.")
+	v.Set("authAccount.Email", "Explicabo veniam sed voluptas quasi aut incidunt.")
 
-	v.Set("authAccount.Description", "Quisquam et et quisquam explicabo ut.")
+	v.Set("authAccount.Sex", "Tempora exercitationem officiis enim impedit.")
 
-	v.Set("authAccount.CreatedAt", "2014-03-27T08:57:11+08:00")
+	v.Set("authAccount.Description", "Dolorum eius molestiae beatae quasi sit.")
 
-	v.Set("authAccount.UpdatedAt", "2009-01-03T22:17:55+08:00")
+	v.Set("authAccount.CreatedAt", "1972-09-23T17:06:35+08:00")
+
+	v.Set("authAccount.UpdatedAt", "1995-06-14T13:44:06+08:00")
 
 	t.Post(t.ReverseUrl("AuthAccounts.Update"), "application/x-www-form-urlencoded", strings.NewReader(v.Encode()))
 	t.AssertOk()
@@ -137,6 +144,8 @@ func (t AuthAccountsTest) TestUpdate() {
 	t.AssertEqual(fmt.Sprint(authAccount.Name), v.Get("authAccount.Name"))
 
 	t.AssertEqual(fmt.Sprint(authAccount.Password), v.Get("authAccount.Password"))
+
+	t.AssertEqual(fmt.Sprint(authAccount.Email), v.Get("authAccount.Email"))
 
 	t.AssertEqual(fmt.Sprint(authAccount.Sex), v.Get("authAccount.Sex"))
 

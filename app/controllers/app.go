@@ -33,7 +33,7 @@ type UploadResult struct {
 }
 
 func (c App) beforeInvoke() revel.Result {
-	c.RenderArgs["active"] = c.Name
+	c.ViewArgs["active"] = c.Name
 	return nil
 }
 
@@ -54,7 +54,7 @@ func (c App) UploadFile(qqfile []byte) revel.Result {
 					errMsg = writeError.Error()
 					revel.ERROR.Print(writeError)
 				} else {
-					return c.RenderJson(UploadResult{true, filename, ""})
+					return c.RenderJSON(UploadResult{true, filename, ""})
 				}
 			} else {
 				errMsg = err.Error()
@@ -62,7 +62,7 @@ func (c App) UploadFile(qqfile []byte) revel.Result {
 		}
 	}
 
-	return c.RenderJson(UploadResult{false, "", errMsg})
+	return c.RenderJSON(UploadResult{false, "", errMsg})
 }
 
 func (c App) ensureFileName(dir string, file string) (string, error) {

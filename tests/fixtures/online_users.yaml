@@ -2,8 +2,8 @@
   pk:
     id: 'PK_GENERATE(online_user_key)'
   fields:
-    name: p68
+    name: h30
     auth_account_id: abc
-    ipaddress: Nulla sit ipsum.
-    macaddress: Corporis assumenda qui aut sunt.
-    created_at: 1987-05-21T11:12:42+08:00
+    hostaddress: Ex voluptates voluptate est omnis explicabo enim.
+    macaddress: Pariatur alias consequatur qui consequuntur asperiores totam accusantium.
+    created_at: 1987-07-28T03:35:51+08:00

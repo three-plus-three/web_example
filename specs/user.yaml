@@ -28,6 +28,11 @@ fields:
   restrictions:
     minlength: 8
     maxlength: 250
+- name: email
+  description: 邮箱
+  label: 邮箱
+  type: string
+  format: email
 - name: sex
   description: 性别
   label: 性别

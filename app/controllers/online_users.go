@@ -1,12 +1,15 @@
 package controllers
 
 import (
+	"strconv"
+
 	"github.com/three-plus-three/web_example/app/libs"
 	"github.com/three-plus-three/web_example/app/models"
 	"github.com/three-plus-three/web_example/app/routes"
 
 	"github.com/revel/revel"
 	"github.com/runner-mei/orm"
+	"github.com/three-plus-three/forms"
 )
 
 // OnlineUsers - 控制器
@@ -48,6 +51,25 @@ func (c OnlineUsers) Index(pageIndex int, pageSize int) revel.Result {
 
 // 编辑新建记录
 func (c OnlineUsers) New() revel.Result {
+	var err error
+	var authAccounts []models.AuthAccount
+	err = c.Lifecycle.DB.AuthAccounts().Where().
+		All(&authAccounts)
+	if err != nil {
+		c.Flash.Error("load AuthAccount fail, " + err.Error())
+		c.FlashParams()
+		c.ViewArgs["authAccounts"] = []forms.InputChoice{}
+	} else {
+		var optAuthAccounts = make([]forms.InputChoice, 0, len(authAccounts))
+		for _, o := range authAccounts {
+			optAuthAccounts = append(optAuthAccounts, forms.InputChoice{
+				Value: strconv.FormatInt(int64(o.ID), 10),
+				Label: o.Name,
+			})
+		}
+		c.ViewArgs["authAccounts"] = optAuthAccounts
+	}
+
 	return c.Render()
 }
 
@@ -89,6 +111,25 @@ func (c OnlineUsers) Edit(id int64) revel.Result {
 		c.FlashParams()
 		return c.Redirect(routes.OnlineUsers.Index(0, 0))
 	}
+
+	var authAccounts []models.AuthAccount
+	err = c.Lifecycle.DB.AuthAccounts().Where().
+		All(&authAccounts)
+	if err != nil {
+		c.Flash.Error("load AuthAccount fail, " + err.Error())
+		c.FlashParams()
+		c.ViewArgs["authAccounts"] = []forms.InputChoice{}
+	} else {
+		var optAuthAccounts = make([]forms.InputChoice, 0, len(authAccounts))
+		for _, o := range authAccounts {
+			optAuthAccounts = append(optAuthAccounts, forms.InputChoice{
+				Value: strconv.FormatInt(int64(o.ID), 10),
+				Label: o.Name,
+			})
+		}
+		c.ViewArgs["authAccounts"] = optAuthAccounts
+	}
+
 	return c.Render(onlineUser)
 }
 

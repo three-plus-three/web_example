@@ -10,7 +10,7 @@ type OnlineUser struct {
 	ID            int       `json:"id" xorm:"id pk autoincr"`
 	Name          string    `json:"name" xorm:"name unique notnull"`
 	AuthAccountID int64     `json:"auth_account_id" xorm:"auth_account_id notnull"`
-	Ipaddress     string    `json:"ipaddress,omitempty" xorm:"ipaddress"`
+	Hostaddress   string    `json:"hostaddress,omitempty" xorm:"hostaddress"`
 	Macaddress    string    `json:"macaddress,omitempty" xorm:"macaddress"`
 	CreatedAt     time.Time `json:"created_at,omitempty" xorm:"created_at created"`
 }
@@ -25,8 +25,6 @@ func (onlineUser *OnlineUser) Validate(validation *revel.Validation) bool {
 
 	validation.Required(onlineUser.AuthAccountID).Key("onlineUser.AuthAccountID")
 
-	validation.MaxSize(onlineUser.Ipaddress, 200).Key("onlineUser.Ipaddress")
-
 	validation.MaxSize(onlineUser.Macaddress, 200).Key("onlineUser.Macaddress")
 
 	return validation.HasErrors()
@@ -40,8 +38,8 @@ func KeyForOnlineUsers(key string) string {
 		return "onlineUser.Name"
 	case "auth_account_id":
 		return "onlineUser.AuthAccountID"
-	case "ipaddress":
-		return "onlineUser.Ipaddress"
+	case "hostaddress":
+		return "onlineUser.Hostaddress"
 	case "macaddress":
 		return "onlineUser.Macaddress"
 	case "created_at":

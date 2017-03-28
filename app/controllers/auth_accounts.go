@@ -48,6 +48,7 @@ func (c AuthAccounts) Index(pageIndex int, pageSize int) revel.Result {
 
 // 编辑新建记录
 func (c AuthAccounts) New() revel.Result {
+
 	return c.Render()
 }
 
@@ -89,6 +90,7 @@ func (c AuthAccounts) Edit(id int64) revel.Result {
 		c.FlashParams()
 		return c.Redirect(routes.AuthAccounts.Index(0, 0))
 	}
+
 	return c.Render(authAccount)
 }
 
