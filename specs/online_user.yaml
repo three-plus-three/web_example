@@ -8,17 +8,8 @@ fields:
   required: true
   readonly: true
   unique: true
-- name: name
-  description: 用户名
-  label: 用户名
-  type: string
-  required: true
-  readonly: true
-  unique: true
-  restrictions:
-    minlength: 2
-    maxlength: 250
 - name: auth_account_id
+  label: 用户名
   type: objectID
   required: true
 - name: hostaddress

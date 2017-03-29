@@ -42,6 +42,7 @@ func (c AuthAccounts) Index(pageIndex int, pageSize int) revel.Result {
 		c.FlashParams()
 		return c.Render()
 	}
+
 	paginator := libs.NewPaginator(c.Request.Request, pageSize, total)
 	return c.Render(authAccounts, paginator)
 }

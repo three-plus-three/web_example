@@ -34,7 +34,6 @@ func (t OnlineUsersTest) TestIndex() {
 		t.Assertf(false, err.Error())
 	}
 
-	t.AssertContains(fmt.Sprint(onlineUser.Name))
 	t.AssertContains(fmt.Sprint(onlineUser.AuthAccountID))
 	t.AssertContains(fmt.Sprint(onlineUser.Hostaddress))
 	t.AssertContains(fmt.Sprint(onlineUser.Macaddress))
@@ -51,15 +50,13 @@ func (t OnlineUsersTest) TestCreate() {
 	t.ClearTable("tpt_online_users")
 	v := url.Values{}
 
-	v.Set("onlineUser.Name", "j5f")
-
 	v.Set("onlineUser.AuthAccountID", "abc")
 
-	v.Set("onlineUser.Hostaddress", "Debitis qui illum eos dolorum.")
+	v.Set("onlineUser.Hostaddress", "Quibusdam eum vel.")
 
-	v.Set("onlineUser.Macaddress", "Voluptatem in vero placeat amet.")
+	v.Set("onlineUser.Macaddress", "Ut voluptatem assumenda.")
 
-	v.Set("onlineUser.CreatedAt", "1996-07-06T13:33:09+08:00")
+	v.Set("onlineUser.CreatedAt", "1989-07-16T19:21:40+08:00")
 
 	t.Post(t.ReverseUrl("OnlineUsers.Create"), "application/x-www-form-urlencoded", strings.NewReader(v.Encode()))
 	t.AssertOk()
@@ -74,7 +71,6 @@ func (t OnlineUsersTest) TestCreate() {
 		t.Assertf(false, err.Error())
 	}
 
-	t.AssertEqual(fmt.Sprint(onlineUser.Name), v.Get("onlineUser.Name"))
 	t.AssertEqual(fmt.Sprint(onlineUser.AuthAccountID), v.Get("onlineUser.AuthAccountID"))
 	t.AssertEqual(fmt.Sprint(onlineUser.Hostaddress), v.Get("onlineUser.Hostaddress"))
 	t.AssertEqual(fmt.Sprint(onlineUser.Macaddress), v.Get("onlineUser.Macaddress"))
@@ -97,7 +93,6 @@ func (t OnlineUsersTest) TestEdit() {
 	}
 	fmt.Println(string(t.ResponseBody))
 
-	t.AssertContains(fmt.Sprint(onlineUser.Name))
 	t.AssertContains(fmt.Sprint(onlineUser.AuthAccountID))
 	t.AssertContains(fmt.Sprint(onlineUser.Hostaddress))
 	t.AssertContains(fmt.Sprint(onlineUser.Macaddress))
@@ -113,15 +108,13 @@ func (t OnlineUsersTest) TestUpdate() {
 	v.Set("_method", "PUT")
 	v.Set("onlineUser.ID", strconv.FormatInt(ruleId, 10))
 
-	v.Set("onlineUser.Name", "77n")
-
 	v.Set("onlineUser.AuthAccountID", "abc")
 
-	v.Set("onlineUser.Hostaddress", "Iure dolores aut delectus.")
+	v.Set("onlineUser.Hostaddress", "Dicta quia impedit.")
 
-	v.Set("onlineUser.Macaddress", "Aut eos suscipit ea perferendis cum quod ut.")
+	v.Set("onlineUser.Macaddress", "Qui ipsa praesentium natus.")
 
-	v.Set("onlineUser.CreatedAt", "1971-03-28T13:33:39+08:00")
+	v.Set("onlineUser.CreatedAt", "1980-07-16T11:02:32+08:00")
 
 	t.Post(t.ReverseUrl("OnlineUsers.Update"), "application/x-www-form-urlencoded", strings.NewReader(v.Encode()))
 	t.AssertOk()
@@ -131,8 +124,6 @@ func (t OnlineUsersTest) TestUpdate() {
 	if err != nil {
 		t.Assertf(false, err.Error())
 	}
-
-	t.AssertEqual(fmt.Sprint(onlineUser.Name), v.Get("onlineUser.Name"))
 
 	t.AssertEqual(fmt.Sprint(onlineUser.AuthAccountID), v.Get("onlineUser.AuthAccountID"))
 

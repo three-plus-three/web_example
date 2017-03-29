@@ -2,8 +2,7 @@
   pk:
     id: 'PK_GENERATE(online_user_key)'
   fields:
-    name: h30
     auth_account_id: abc
-    hostaddress: Ex voluptates voluptate est omnis explicabo enim.
-    macaddress: Pariatur alias consequatur qui consequuntur asperiores totam accusantium.
-    created_at: 1987-07-28T03:35:51+08:00
+    hostaddress: Asperiores mollitia et mollitia id laboriosam.
+    macaddress: Illo odit nisi distinctio.
+    created_at: 1999-02-28T11:03:24+08:00

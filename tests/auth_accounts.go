@@ -51,19 +51,19 @@ func (t AuthAccountsTest) TestCreate() {
 	t.ClearTable("tpt_auth_accounts")
 	v := url.Values{}
 
-	v.Set("authAccount.Name", "w0z")
+	v.Set("authAccount.Name", "rx8")
 
-	v.Set("authAccount.Password", "p5ehps6gt")
+	v.Set("authAccount.Password", "72g3pkimo")
 
-	v.Set("authAccount.Email", "Sequi beatae omnis non.")
+	v.Set("authAccount.Email", "Ut deserunt omnis nam id explicabo cum et.")
 
-	v.Set("authAccount.Sex", "Ut rem qui.")
+	v.Set("authAccount.Sex", "Odit et at aut est laboriosam ut.")
 
-	v.Set("authAccount.Description", "Soluta et ullam perspiciatis voluptates.")
+	v.Set("authAccount.Description", "Harum et quas aspernatur quaerat ratione molestias.")
 
-	v.Set("authAccount.CreatedAt", "1985-12-13T13:13:13+08:00")
+	v.Set("authAccount.CreatedAt", "1996-10-20T06:17:14+08:00")
 
-	v.Set("authAccount.UpdatedAt", "2011-10-22T05:57:12+08:00")
+	v.Set("authAccount.UpdatedAt", "2014-10-11T13:27:00+08:00")
 
 	t.Post(t.ReverseUrl("AuthAccounts.Create"), "application/x-www-form-urlencoded", strings.NewReader(v.Encode()))
 	t.AssertOk()
@@ -118,19 +118,19 @@ func (t AuthAccountsTest) TestUpdate() {
 	v.Set("_method", "PUT")
 	v.Set("authAccount.ID", strconv.FormatInt(ruleId, 10))
 
-	v.Set("authAccount.Name", "97s")
+	v.Set("authAccount.Name", "bx9")
 
-	v.Set("authAccount.Password", "akyctmtqv")
+	v.Set("authAccount.Password", "bsfy40q3z")
 
-	v.Set("authAccount.Email", "Explicabo veniam sed voluptas quasi aut incidunt.")
+	v.Set("authAccount.Email", "Fuga voluptate esse sapiente.")
 
-	v.Set("authAccount.Sex", "Tempora exercitationem officiis enim impedit.")
+	v.Set("authAccount.Sex", "Iste et est et.")
 
-	v.Set("authAccount.Description", "Dolorum eius molestiae beatae quasi sit.")
+	v.Set("authAccount.Description", "Esse tempore id maxime sint autem.")
 
-	v.Set("authAccount.CreatedAt", "1972-09-23T17:06:35+08:00")
+	v.Set("authAccount.CreatedAt", "1977-11-09T02:40:47+08:00")
 
-	v.Set("authAccount.UpdatedAt", "1995-06-14T13:44:06+08:00")
+	v.Set("authAccount.UpdatedAt", "2016-01-12T10:43:59+08:00")
 
 	t.Post(t.ReverseUrl("AuthAccounts.Update"), "application/x-www-form-urlencoded", strings.NewReader(v.Encode()))
 	t.AssertOk()

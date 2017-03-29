@@ -7,7 +7,7 @@ import (
 )
 
 type AuthAccount struct {
-	ID          int       `json:"id" xorm:"id pk autoincr"`
+	ID          int64     `json:"id" xorm:"id pk autoincr"`
 	Name        string    `json:"name" xorm:"name unique notnull"`
 	Password    string    `json:"password,omitempty" xorm:"password"`
 	Email       string    `json:"email,omitempty" xorm:"email"`

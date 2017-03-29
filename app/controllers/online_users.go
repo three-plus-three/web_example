@@ -45,6 +45,27 @@ func (c OnlineUsers) Index(pageIndex int, pageSize int) revel.Result {
 		c.FlashParams()
 		return c.Render()
 	}
+
+	var idList = make([]int64, 0, len(onlineUsers))
+	for idx := range onlineUsers {
+		idList = append(idList, onlineUsers[idx].ID)
+	}
+
+	var authAccounts []models.AuthAccount
+	err = c.Lifecycle.DB.AuthAccounts().Where().
+		And(orm.Cond{"id IN": idList}).
+		All(&authAccounts)
+	if err != nil {
+		c.Flash.Error("load AuthAccount fail, " + err.Error())
+		c.FlashParams()
+	} else {
+		var authAccountsByID = make(map[int64]string, len(authAccounts))
+		for idx := range authAccounts {
+			authAccountsByID[authAccounts[idx].ID] = authAccounts[idx].Name
+		}
+		c.ViewArgs["authAccounts"] = authAccountsByID
+	}
+
 	paginator := libs.NewPaginator(c.Request.Request, pageSize, total)
 	return c.Render(onlineUsers, paginator)
 }

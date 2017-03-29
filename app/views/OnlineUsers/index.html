@@ -20,7 +20,6 @@
       <tr>
         <th><input type="checkbox" id="online_users-all-checker"></th>
         <th><nobr>用户名</nobr></th>
-        <th><nobr>auth_account_id</nobr></th>
         <th><nobr>用户 IP 地址</nobr></th>
         <th><nobr>用户 MAC 地址</nobr></th>
         <th><nobr>登录时间</nobr></th>
@@ -30,9 +29,7 @@
       {{range $v := .onlineUsers}}
       <tr>
         <td><input type="checkbox" class="online_users-row-checker" key="{{$v.ID}}" url="{{url "OnlineUsers.Edit" $v.ID}}"></td>
-        
-        <td>{{$v.Name}}</td>
-        <td>{{$v.AuthAccountID}}</td>
+        <td>{{index $raw.authAccounts $v.AuthAccountID}}</td>
         <td>{{$v.Hostaddress}}</td>
         <td>{{$v.Macaddress}}</td>
         <td>{{datetime $v.CreatedAt}}</td>
