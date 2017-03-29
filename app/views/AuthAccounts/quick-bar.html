@@ -1,20 +1,22 @@
-<div class="quick-actions btn-group m-b">
-    {{if current_user_has_new_permission . "auth_accounts"}}<a id='auth_accounts-new' href='{{url "AuthAccounts.New"}}'  class="btn btn-outline btn-default" method="" mode="*" confirm="" client="false" target="_self">
-        <i class="fa fa-add"></i>添加
-    </a>{{end}}
-    {{if current_user_has_edit_permission . "auth_accounts"}}<a id='auth_accounts-edit' href='' url='{{url "AuthAccounts.Edit"}}'  class="btn btn-outline btn-default" method="" mode="1" confirm="" client="false" target="_self">
-        <i class="fa fa-edit"></i>编辑
-    </a>{{end}}
-    {{if current_user_has_del_permission . "auth_accounts"}}<a id='auth_accounts-delete' href='' url='{{url "AuthAccounts.DeleteByIDs"}}'  class="btn btn-outline btn-default" mode="+" target="_self">
-        <i class="fa fa-trash"></i> 删除
-    </a>{{end}}<form action="{{url "AuthAccounts.Index" 0 0}}" method="POST" id='auth_accounts-quick-form' class="btn btn-outline btn-default" style='display:inline;'>
-        <input type="text" name="query">
-        <a href="javascript:document.getElementById('auth_accounts-quick-form').submit()" >
-            <i class="fa fa-search"></i> 查询
+    <div class="quick-actions btn-group m-b">
+        {{- if current_user_has_new_permission . "auth_accounts"}}
+        <a id='auth_accounts-new' href='{{url "AuthAccounts.New"}}'  class="btn btn-outline btn-default" method="" mode="*" confirm="" client="false" target="_self">
+            <i class="fa fa-add"></i>添加
         </a>
-    </form>
-</div>
-    <!--
-    <ul class="quick-actions ">
-        
-    </ul>-->
+        {{- end}}
+        {{- if current_user_has_edit_permission . "auth_accounts"}}
+        <a id='auth_accounts-edit' href='' url='{{url "AuthAccounts.Edit"}}'  class="btn btn-outline btn-default" method="" mode="1" confirm="" client="false" target="_self">
+            <i class="fa fa-edit"></i>编辑
+        </a>
+        {{- end}}
+        {{- if current_user_has_del_permission . "auth_accounts"}}
+        <a id='auth_accounts-delete' href='' url='{{url "AuthAccounts.DeleteByIDs"}}'  class="btn btn-outline btn-default" mode="+" target="_self">
+            <i class="fa fa-trash"></i> 删除
+        </a>
+        {{- end}}<form action="{{url "AuthAccounts.Index" 0 0}}" method="POST" id='auth_accounts-quick-form' class="form-inline"  style="display: inline;">
+            <input type="text" name="query">
+            <a href="javascript:document.getElementById('auth_accounts-quick-form').submit()" >
+                <i class="fa fa-search"></i> 查询
+            </a>
+        </form>
+    </div>

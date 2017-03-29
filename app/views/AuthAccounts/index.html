@@ -13,7 +13,6 @@
         <div class="ibox-tools"></div>
     </div>
     <div class="ibox-content">
-
     {{template "AuthAccounts/quick-bar.html" .}}
     <table class="table table-bordered table-striped table-highlight ">
       <thead>
@@ -39,7 +38,7 @@
         <td>{{datetime $v.UpdatedAt}}</td>
         {{if current_user_has_write_permission $raw "auth_accounts"}}<td>
           {{if current_user_has_edit_permission $raw "auth_accounts"}}<a href='{{url "AuthAccounts.Edit" $v.ID}}'>编辑</a>{{end}}
-          {{if current_user_has_del_permission $raw "auth_accounts"}}<form id='auth_accounts-delete-{{$v.ID}}' action="{{url "AuthAccounts.Delete" $v.ID}}" method="POST" class="form-horizontal" style='display:inline;'>
+          {{if current_user_has_del_permission $raw "auth_accounts"}}<form id='auth_accounts-delete-{{$v.ID}}' action="{{url "AuthAccounts.Delete" $v.ID}}" method="POST" class="form-inline" role="form" style="display: inline;">
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="id" value="{{$v.ID}}">
               <a href="javascript:document.getElementById('auth_accounts-delete-{{$v.ID}}').submit()">
