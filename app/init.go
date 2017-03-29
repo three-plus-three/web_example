@@ -5,6 +5,7 @@ import (
 	"crypto/sha1"
 	"log"
 	"os"
+	"path/filepath"
 
 	"github.com/three-plus-three/web_example/app/libs"
 	"github.com/three-plus-three/web_example/app/models"
@@ -35,11 +36,16 @@ func init() {
 	}
 
 	revel.OnAppStart(func() {
-		env, err := commons.NewEnvironment(commons.Options{Name: "nsm"})
+		env, err := commons.NewEnvironment(commons.Options{Name: "nsm",
+			ConfDir: filepath.Join(os.Getenv("hw_root_dir"), "conf")})
 		if nil != err {
 			log.Println(err)
 			os.Exit(-1)
 			return
+		}
+		if revel.RunMode == "test" {
+			env.Db.Models.Schema = env.Db.Models.Schema + "_models_test"
+			env.Db.Data.Schema = env.Db.Data.Schema + "_test"
 		}
 
 		lifecycle, err := libs.NewLifecycle(env, nil)

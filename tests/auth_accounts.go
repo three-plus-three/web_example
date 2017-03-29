@@ -51,19 +51,19 @@ func (t AuthAccountsTest) TestCreate() {
 	t.ClearTable("tpt_auth_accounts")
 	v := url.Values{}
 
-	v.Set("authAccount.Name", "wfw")
+	v.Set("authAccount.Name", "hsc")
 
-	v.Set("authAccount.Password", "lwryt760k")
+	v.Set("authAccount.Password", "s3usixpsk")
 
-	v.Set("authAccount.Email", "Dicta vero maxime.")
+	v.Set("authAccount.Email", "Eum fugiat sit.")
 
-	v.Set("authAccount.Sex", "Distinctio ut accusamus esse iste.")
+	v.Set("authAccount.Sex", "Eum nihil vel quos qui sequi.")
 
-	v.Set("authAccount.Description", "Et facere quia est eveniet.")
+	v.Set("authAccount.Description", "Nam omnis dignissimos labore voluptatum.")
 
-	v.Set("authAccount.CreatedAt", "2011-01-13T23:27:24+08:00")
+	v.Set("authAccount.CreatedAt", "2008-10-14T16:04:28+08:00")
 
-	v.Set("authAccount.UpdatedAt", "1972-07-02T04:45:57+08:00")
+	v.Set("authAccount.UpdatedAt", "2015-02-10T20:59:05+08:00")
 
 	t.Post(t.ReverseUrl("AuthAccounts.Create"), "application/x-www-form-urlencoded", strings.NewReader(v.Encode()))
 	t.AssertOk()
@@ -118,19 +118,19 @@ func (t AuthAccountsTest) TestUpdate() {
 	v.Set("_method", "PUT")
 	v.Set("authAccount.ID", strconv.FormatInt(ruleId, 10))
 
-	v.Set("authAccount.Name", "ib9")
+	v.Set("authAccount.Name", "937")
 
-	v.Set("authAccount.Password", "glt06fg81")
+	v.Set("authAccount.Password", "c7wkspmjs")
 
-	v.Set("authAccount.Email", "Veniam fugit rerum quo sit.")
+	v.Set("authAccount.Email", "Iusto sed dignissimos qui sed qui corporis.")
 
-	v.Set("authAccount.Sex", "Iure qui blanditiis ipsum distinctio.")
+	v.Set("authAccount.Sex", "Autem voluptates non ea.")
 
-	v.Set("authAccount.Description", "Voluptatibus aut ad magnam est sit.")
+	v.Set("authAccount.Description", "Accusamus quia sed.")
 
-	v.Set("authAccount.CreatedAt", "1990-12-18T23:54:16+08:00")
+	v.Set("authAccount.CreatedAt", "2002-07-08T06:29:17+08:00")
 
-	v.Set("authAccount.UpdatedAt", "2008-01-09T21:03:45+08:00")
+	v.Set("authAccount.UpdatedAt", "1974-11-08T17:10:18+08:00")
 
 	t.Post(t.ReverseUrl("AuthAccounts.Update"), "application/x-www-form-urlencoded", strings.NewReader(v.Encode()))
 	t.AssertOk()
