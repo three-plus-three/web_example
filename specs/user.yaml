@@ -38,8 +38,6 @@ fields:
   label: 性别
   type: string
   required: true
-  readonly: true
-  unique: true
   restrictions:
     enumerations:
     - label: 男

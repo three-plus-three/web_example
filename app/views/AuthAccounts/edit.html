@@ -9,7 +9,7 @@
     <div class="ibox-content">
         <form action="{{url "AuthAccounts.Update" }}" method="POST" class="form-horizontal" id="auth_accounts-edit">
         <input type="hidden" name="_method" value="PUT">
-        {{hidden_field . "authAccount.ID"}}
+        {{hidden_field . "authAccount.ID" | render}}
         {{template "AuthAccounts/edit_fields.html" .}}
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">

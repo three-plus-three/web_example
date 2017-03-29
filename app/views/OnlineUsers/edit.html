@@ -9,7 +9,7 @@
     <div class="ibox-content">
         <form action="{{url "OnlineUsers.Update" }}" method="POST" class="form-horizontal" id="online_users-edit">
         <input type="hidden" name="_method" value="PUT">
-        {{hidden_field . "onlineUser.ID"}}
+        {{hidden_field . "onlineUser.ID" | render}}
         {{template "OnlineUsers/edit_fields.html" .}}
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">

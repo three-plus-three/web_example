@@ -1,5 +1,5 @@
-{{text_field . "authAccount.Name" "用户名:" | render}}
-{{password_field . "authAccount.Password" "密码:" | render}}
-{{email_field . "authAccount.Email" "邮箱:" | render}}
-{{select_field . "authAccount.Sex" "性别:" "[{\"label\":\"男\",\"value\":\"male\"},{\"label\":\"女\",\"value\":\"female\"}]" | render}}
+{{text_field . "authAccount.Name" "用户名:" | f_disabled | render}}
+{{password_field . "authAccount.Password" "密码:"  | render}}
+{{email_field . "authAccount.Email" "邮箱:"  | render}}
+{{select_field . "authAccount.Sex" "性别:" "[{\"label\":\"男\",\"value\":\"male\"},{\"label\":\"女\",\"value\":\"female\"}]"  | render}}
 {{textarea_field . "authAccount.Description" "描述:" 3  0 |  render}}

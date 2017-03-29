@@ -11,7 +11,7 @@ type AuthAccount struct {
 	Name        string    `json:"name" xorm:"name unique notnull"`
 	Password    string    `json:"password,omitempty" xorm:"password"`
 	Email       string    `json:"email,omitempty" xorm:"email"`
-	Sex         string    `json:"sex" xorm:"sex unique notnull"`
+	Sex         string    `json:"sex" xorm:"sex notnull"`
 	Description string    `json:"description,omitempty" xorm:"description"`
 	CreatedAt   time.Time `json:"created_at,omitempty" xorm:"created_at created"`
 	UpdatedAt   time.Time `json:"updated_at,omitempty" xorm:"updated_at updated"`
@@ -29,7 +29,9 @@ func (authAccount *AuthAccount) Validate(validation *revel.Validation) bool {
 
 	validation.MaxSize(authAccount.Password, 250).Key("authAccount.Password")
 
-	validation.Email(authAccount.Email).Key("authAccount.Email")
+	if "" != authAccount.Email {
+		validation.Email(authAccount.Email).Key("authAccount.Email")
+	}
 
 	validation.Required(authAccount.Sex).Key("authAccount.Sex")
 
