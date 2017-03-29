@@ -7,20 +7,14 @@
     </a>{{end}}
     {{if current_user_has_del_permission . "auth_accounts"}}<a id='auth_accounts-delete' href='' url='{{url "AuthAccounts.DeleteByIDs"}}'  class="btn btn-outline btn-default" mode="+" target="_self">
         <i class="fa fa-trash"></i> 删除
-    </a>{{end}}
+    </a>{{end}}<form action="{{url "AuthAccounts.Index" 0 0}}" method="POST" id='auth_accounts-quick-form' class="btn btn-outline btn-default" style='display:inline;'>
+            <input type="text" name="query">
+                <a href="javascript:document.getElementById('auth_accounts-quick-form').submit()" class="grid-action" method="" mode="*">
+                    <i class="fa fa-search"></i> 查询
+                </a>
+    </form>
 </div>
     <!--
     <ul class="quick-actions ">
-        <form action="" method="get" class="form-action" id="auth_accounts-quick-form" >
-            <li>
-                <label>
-                    <span>名称</span><input type="text" name="name">
-                </label>
-            </li>
-            <li>
-                <a href="javascript:document.getElementById('auth_accounts-quick-form').submit()" class="grid-action" method="" mode="*">
-                    <i class="icon-search"></i> 查询
-                </a>
-            </li>
-        </form>
+        
     </ul>-->

@@ -19,12 +19,12 @@ type OnlineUsers struct {
 
 // 列出所有记录
 func (c OnlineUsers) Index(pageIndex int, pageSize int) revel.Result {
-	//var exprs []db.Expr
-	//if "" != name {
-	//  exprs = append(exprs, models.OnlineUsers.C.NAME.LIKE("%"+name+"%"))
-	//}
+	var cond orm.Cond
+	if name := c.Params.Get("query"); name != "" {
+		cond = orm.Cond{"name LIKE": "%" + name + "%"}
+	}
 
-	total, err := c.Lifecycle.DB.OnlineUsers().Where().Count()
+	total, err := c.Lifecycle.DB.OnlineUsers().Where().And(cond).Count()
 	if err != nil {
 		c.Flash.Error(err.Error())
 		c.FlashParams()
@@ -37,6 +37,7 @@ func (c OnlineUsers) Index(pageIndex int, pageSize int) revel.Result {
 
 	var onlineUsers []models.OnlineUser
 	err = c.Lifecycle.DB.OnlineUsers().Where().
+		And(cond).
 		Offset(pageIndex * pageSize).
 		Limit(pageSize).
 		All(&onlineUsers)

@@ -52,11 +52,11 @@ func (t OnlineUsersTest) TestCreate() {
 
 	v.Set("onlineUser.AuthAccountID", "abc")
 
-	v.Set("onlineUser.Hostaddress", "Quibusdam eum vel.")
+	v.Set("onlineUser.Hostaddress", "Et vel animi ut facere ea omnis.")
 
-	v.Set("onlineUser.Macaddress", "Ut voluptatem assumenda.")
+	v.Set("onlineUser.Macaddress", "Id ad sunt rerum sed cupiditate cum non.")
 
-	v.Set("onlineUser.CreatedAt", "1989-07-16T19:21:40+08:00")
+	v.Set("onlineUser.CreatedAt", "1979-08-18T16:08:16+08:00")
 
 	t.Post(t.ReverseUrl("OnlineUsers.Create"), "application/x-www-form-urlencoded", strings.NewReader(v.Encode()))
 	t.AssertOk()
@@ -110,11 +110,11 @@ func (t OnlineUsersTest) TestUpdate() {
 
 	v.Set("onlineUser.AuthAccountID", "abc")
 
-	v.Set("onlineUser.Hostaddress", "Dicta quia impedit.")
+	v.Set("onlineUser.Hostaddress", "Officia voluptatibus eaque necessitatibus dolore non ut illo.")
 
-	v.Set("onlineUser.Macaddress", "Qui ipsa praesentium natus.")
+	v.Set("onlineUser.Macaddress", "Fugiat quasi nihil.")
 
-	v.Set("onlineUser.CreatedAt", "1980-07-16T11:02:32+08:00")
+	v.Set("onlineUser.CreatedAt", "1994-03-22T00:05:06+08:00")
 
 	t.Post(t.ReverseUrl("OnlineUsers.Update"), "application/x-www-form-urlencoded", strings.NewReader(v.Encode()))
 	t.AssertOk()

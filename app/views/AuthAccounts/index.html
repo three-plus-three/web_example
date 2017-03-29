@@ -28,7 +28,7 @@
         {{if current_user_has_write_permission $raw "auth_accounts"}}<th>操作</th>{{end}}
       </tr>
       </thead>
-      {{- range $v := .authAccounts}}
+      {{range $v := .authAccounts}}
       <tr>
         <td><input type="checkbox" class="auth_accounts-row-checker" key="{{$v.ID}}" url="{{url "AuthAccounts.Edit" $v.ID}}"></td>
         <td>{{$v.Name}}</td>
@@ -48,7 +48,7 @@
             </form>{{end}}
         </td>{{end}}
       </tr>
-      {{- end}}
+      {{end}}
     </table>
     {{template "paginator.html" .}}
     </div>
