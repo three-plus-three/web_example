@@ -22,28 +22,36 @@
         <th><nobr>用户 IP 地址</nobr></th>
         <th><nobr>用户 MAC 地址</nobr></th>
         <th><nobr>登录时间</nobr></th>
-        {{if current_user_has_write_permission $raw "online_users"}}<th>操作</th>{{end}}
+        {{if current_user_has_write_permission $raw "online_users" -}}
+        <th>操作</th>
+        {{- end}}
       </tr>
       </thead>
-      {{range $v := .onlineUsers}}
-      <tr>
-        <td><input type="checkbox" class="online_users-row-checker" key="{{$v.ID}}" url="{{url "OnlineUsers.Edit" $v.ID}}"></td>
-        <td>{{index $raw.authAccounts $v.AuthAccountID}}</td>
-        <td>{{$v.Hostaddress}}</td>
-        <td>{{$v.Macaddress}}</td>
-        <td>{{datetime $v.CreatedAt}}</td>
-        {{if current_user_has_write_permission $raw "online_users"}}<td>
-          {{if current_user_has_edit_permission $raw "online_users"}}<a href='{{url "OnlineUsers.Edit" $v.ID}}'>编辑</a>{{end}}
-          {{if current_user_has_del_permission $raw "online_users"}}<form id='online_users-delete-{{$v.ID}}' action="{{url "OnlineUsers.Delete" $v.ID}}" method="POST" class="form-inline" role="form" style="display: inline;">
-            <input type="hidden" name="_method" value="DELETE">
-            <input type="hidden" name="id" value="{{$v.ID}}">
-              <a href="javascript:document.getElementById('online_users-delete-{{$v.ID}}').submit()">
-                <i class="icon-search"></i> 删除
-              </a>
-            </form>{{end}}
-        </td>{{end}}
-      </tr>
-      {{end}}
+      <tbody>
+      {{- range $v := .onlineUsers}}
+        <tr>
+          <td><input type="checkbox" class="online_users-row-checker" key="{{$v.ID}}" url="{{url "OnlineUsers.Edit" $v.ID}}"></td>
+          <td>{{index $raw.authAccounts $v.AuthAccountID}}</td>
+          <td>{{$v.Hostaddress}}</td>
+          <td>{{$v.Macaddress}}</td>
+          <td>{{datetime $v.CreatedAt}}</td>
+          {{if current_user_has_write_permission $raw "online_users"}}<td>
+          {{if current_user_has_edit_permission $raw "online_users" -}}
+            <a href='{{url "OnlineUsers.Edit" $v.ID}}'>编辑</a>
+            {{- end}}
+          {{if current_user_has_del_permission $raw "online_users"}}
+            <form id='online_users-delete-{{$v.ID}}' action="{{url "OnlineUsers.Delete" $v.ID}}" method="POST" class="form-inline" role="form" style="display: inline;">
+              <input type="hidden" name="_method" value="DELETE">
+              <input type="hidden" name="id" value="{{$v.ID}}">
+                <a href="javascript:document.getElementById('online_users-delete-{{$v.ID}}').submit()">
+                  <i class="icon-search"></i> 删除
+                </a>
+            </form>
+            {{- end}}
+          </td>{{end}}
+        </tr>
+      <tbody>
+      {{- end}}
     </table>
     {{template "paginator.html" .}}
     </div>

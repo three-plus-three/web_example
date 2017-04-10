@@ -55,7 +55,7 @@ func init() {
 			return
 		}
 		Lifecycle = lifecycle
-		Lifecycle.UrlPrefix = env.DaemonUrlPath
+		Lifecycle.URLPrefix = env.DaemonUrlPath
 		lifecycle.Variables = readVariables(env)
 		Lifecycle.CheckUser = initSSO(env)
 
@@ -83,6 +83,10 @@ func init() {
 
 		initTemplateFuncs(env)
 	}, 0)
+
+	revel.OnAppStart(func() {
+		initMenuList(Lifecycle)
+	}, 2)
 }
 
 // TODO turn this into revel.HeaderFilter

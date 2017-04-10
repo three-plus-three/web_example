@@ -17,7 +17,7 @@ type OnlineUsers struct {
 	App
 }
 
-// 列出所有记录
+// Index 列出所有记录
 func (c OnlineUsers) Index(pageIndex int, pageSize int) revel.Result {
 	var cond orm.Cond
 	if name := c.Params.Get("query"); name != "" {
@@ -26,8 +26,7 @@ func (c OnlineUsers) Index(pageIndex int, pageSize int) revel.Result {
 
 	total, err := c.Lifecycle.DB.OnlineUsers().Where().And(cond).Count()
 	if err != nil {
-		c.Flash.Error(err.Error())
-		c.FlashParams()
+		c.ViewArgs["errors"] = err.Error()
 		return c.Render(err)
 	}
 
@@ -42,44 +41,50 @@ func (c OnlineUsers) Index(pageIndex int, pageSize int) revel.Result {
 		Limit(pageSize).
 		All(&onlineUsers)
 	if err != nil {
-		c.Flash.Error(err.Error())
-		c.FlashParams()
+		c.ViewArgs["errors"] = err.Error()
 		return c.Render()
 	}
 
-	var idList = make([]int64, 0, len(onlineUsers))
-	for idx := range onlineUsers {
-		idList = append(idList, onlineUsers[idx].ID)
-	}
+	if len(onlineUsers) > 0 {
+		var errList []string
 
-	var authAccounts []models.AuthAccount
-	err = c.Lifecycle.DB.AuthAccounts().Where().
-		And(orm.Cond{"id IN": idList}).
-		All(&authAccounts)
-	if err != nil {
-		c.Flash.Error("load AuthAccount fail, " + err.Error())
-		c.FlashParams()
-	} else {
-		var authAccountsByID = make(map[int64]string, len(authAccounts))
-		for idx := range authAccounts {
-			authAccountsByID[authAccounts[idx].ID] = authAccounts[idx].Name
+		var authAccountIDList = make([]int64, 0, len(onlineUsers))
+		for idx := range onlineUsers {
+			authAccountIDList = append(authAccountIDList, onlineUsers[idx].AuthAccountID)
 		}
-		c.ViewArgs["authAccounts"] = authAccountsByID
+
+		var authAccounts []models.AuthAccount
+		err = c.Lifecycle.DB.AuthAccounts().Where().
+			And(orm.Cond{"id IN": authAccountIDList}).
+			All(&authAccounts)
+		if err != nil {
+			errList = append(errList, "load AuthAccount fail, "+err.Error())
+		} else {
+			var authAccountsByID = make(map[int64]string, len(authAccounts))
+			for idx := range authAccounts {
+				authAccountsByID[authAccounts[idx].ID] = authAccounts[idx].Name
+			}
+			c.ViewArgs["authAccounts"] = authAccountsByID
+		}
+		if len(errList) > 0 {
+			c.ViewArgs["errors"] = errList
+		}
 	}
 
 	paginator := libs.NewPaginator(c.Request.Request, pageSize, total)
 	return c.Render(onlineUsers, paginator)
 }
 
-// 编辑新建记录
+// New 编辑新建记录
 func (c OnlineUsers) New() revel.Result {
+	var errList []string
 	var err error
+
 	var authAccounts []models.AuthAccount
 	err = c.Lifecycle.DB.AuthAccounts().Where().
 		All(&authAccounts)
 	if err != nil {
-		c.Flash.Error("load AuthAccount fail, " + err.Error())
-		c.FlashParams()
+		errList = append(errList, "load AuthAccount fail, "+err.Error())
 		c.ViewArgs["authAccounts"] = []forms.InputChoice{}
 	} else {
 		var optAuthAccounts = make([]forms.InputChoice, 0, len(authAccounts))
@@ -92,10 +97,13 @@ func (c OnlineUsers) New() revel.Result {
 		c.ViewArgs["authAccounts"] = optAuthAccounts
 	}
 
+	if len(errList) > 0 {
+		c.ViewArgs["errors"] = errList
+	}
 	return c.Render()
 }
 
-// 创建记录
+// Create 创建记录
 func (c OnlineUsers) Create(onlineUser *models.OnlineUser) revel.Result {
 	if onlineUser.Validate(c.Validation) {
 		c.Validation.Keep()
@@ -120,7 +128,7 @@ func (c OnlineUsers) Create(onlineUser *models.OnlineUser) revel.Result {
 	return c.Redirect(routes.OnlineUsers.Index(0, 0))
 }
 
-// 编辑指定 id 的记录
+// Edit 编辑指定 id 的记录
 func (c OnlineUsers) Edit(id int64) revel.Result {
 	var onlineUser models.OnlineUser
 	err := c.Lifecycle.DB.OnlineUsers().Id(id).Get(&onlineUser)
@@ -134,12 +142,13 @@ func (c OnlineUsers) Edit(id int64) revel.Result {
 		return c.Redirect(routes.OnlineUsers.Index(0, 0))
 	}
 
+	var errList []string
+
 	var authAccounts []models.AuthAccount
 	err = c.Lifecycle.DB.AuthAccounts().Where().
 		All(&authAccounts)
 	if err != nil {
-		c.Flash.Error("load AuthAccount fail, " + err.Error())
-		c.FlashParams()
+		errList = append(errList, "load AuthAccount fail, "+err.Error())
 		c.ViewArgs["authAccounts"] = []forms.InputChoice{}
 	} else {
 		var optAuthAccounts = make([]forms.InputChoice, 0, len(authAccounts))
@@ -152,10 +161,14 @@ func (c OnlineUsers) Edit(id int64) revel.Result {
 		c.ViewArgs["authAccounts"] = optAuthAccounts
 	}
 
+	if len(errList) > 0 {
+		c.ViewArgs["errors"] = errList
+	}
+
 	return c.Render(onlineUser)
 }
 
-// 按 id 更新记录
+// Update 按 id 更新记录
 func (c OnlineUsers) Update(onlineUser *models.OnlineUser) revel.Result {
 	if onlineUser.Validate(c.Validation) {
 		c.Validation.Keep()
@@ -183,7 +196,7 @@ func (c OnlineUsers) Update(onlineUser *models.OnlineUser) revel.Result {
 	return c.Redirect(routes.OnlineUsers.Index(0, 0))
 }
 
-// 按 id 删除记录
+// Delete 按 id 删除记录
 func (c OnlineUsers) Delete(id int64) revel.Result {
 	err := c.Lifecycle.DB.OnlineUsers().Id(id).Delete()
 	if nil != err {
@@ -198,7 +211,7 @@ func (c OnlineUsers) Delete(id int64) revel.Result {
 	return c.Redirect(OnlineUsers.Index)
 }
 
-// 按 id 列表删除记录
+// DeleteByIDs 按 id 列表删除记录
 func (c OnlineUsers) DeleteByIDs(id_list []int64) revel.Result {
 	if len(id_list) == 0 {
 		c.Flash.Error("请至少选择一条记录！")

@@ -14,7 +14,7 @@ type AuthAccounts struct {
 	App
 }
 
-// 列出所有记录
+// Index 列出所有记录
 func (c AuthAccounts) Index(pageIndex int, pageSize int) revel.Result {
 	var cond orm.Cond
 	if name := c.Params.Get("query"); name != "" {
@@ -23,8 +23,7 @@ func (c AuthAccounts) Index(pageIndex int, pageSize int) revel.Result {
 
 	total, err := c.Lifecycle.DB.AuthAccounts().Where().And(cond).Count()
 	if err != nil {
-		c.Flash.Error(err.Error())
-		c.FlashParams()
+		c.ViewArgs["errors"] = err.Error()
 		return c.Render(err)
 	}
 
@@ -39,8 +38,7 @@ func (c AuthAccounts) Index(pageIndex int, pageSize int) revel.Result {
 		Limit(pageSize).
 		All(&authAccounts)
 	if err != nil {
-		c.Flash.Error(err.Error())
-		c.FlashParams()
+		c.ViewArgs["errors"] = err.Error()
 		return c.Render()
 	}
 
@@ -48,13 +46,13 @@ func (c AuthAccounts) Index(pageIndex int, pageSize int) revel.Result {
 	return c.Render(authAccounts, paginator)
 }
 
-// 编辑新建记录
+// New 编辑新建记录
 func (c AuthAccounts) New() revel.Result {
 
 	return c.Render()
 }
 
-// 创建记录
+// Create 创建记录
 func (c AuthAccounts) Create(authAccount *models.AuthAccount) revel.Result {
 	if authAccount.Validate(c.Validation) {
 		c.Validation.Keep()
@@ -79,7 +77,7 @@ func (c AuthAccounts) Create(authAccount *models.AuthAccount) revel.Result {
 	return c.Redirect(routes.AuthAccounts.Index(0, 0))
 }
 
-// 编辑指定 id 的记录
+// Edit 编辑指定 id 的记录
 func (c AuthAccounts) Edit(id int64) revel.Result {
 	var authAccount models.AuthAccount
 	err := c.Lifecycle.DB.AuthAccounts().Id(id).Get(&authAccount)
@@ -96,7 +94,7 @@ func (c AuthAccounts) Edit(id int64) revel.Result {
 	return c.Render(authAccount)
 }
 
-// 按 id 更新记录
+// Update 按 id 更新记录
 func (c AuthAccounts) Update(authAccount *models.AuthAccount) revel.Result {
 	if authAccount.Validate(c.Validation) {
 		c.Validation.Keep()
@@ -124,7 +122,7 @@ func (c AuthAccounts) Update(authAccount *models.AuthAccount) revel.Result {
 	return c.Redirect(routes.AuthAccounts.Index(0, 0))
 }
 
-// 按 id 删除记录
+// Delete 按 id 删除记录
 func (c AuthAccounts) Delete(id int64) revel.Result {
 	err := c.Lifecycle.DB.AuthAccounts().Id(id).Delete()
 	if nil != err {
@@ -139,7 +137,7 @@ func (c AuthAccounts) Delete(id int64) revel.Result {
 	return c.Redirect(AuthAccounts.Index)
 }
 
-// 按 id 列表删除记录
+// DeleteByIDs 按 id 列表删除记录
 func (c AuthAccounts) DeleteByIDs(id_list []int64) revel.Result {
 	if len(id_list) == 0 {
 		c.Flash.Error("请至少选择一条记录！")

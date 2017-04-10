@@ -5,12 +5,12 @@ import (
 	"cn/com/hengwei/commons/types"
 	"database/sql"
 
-	"github.com/three-plus-three/web_example/app/models"
-
 	"github.com/Masterminds/squirrel"
 	"github.com/go-xorm/xorm"
 	_ "github.com/lib/pq"
 	"github.com/three-plus-three/sso/client/revel_sso"
+	"github.com/three-plus-three/web_example/app/models"
+	web_app "github.com/three-plus-three/web_templates/app"
 )
 
 // DbRunner wraps sql.DB to implement Runner.
@@ -42,9 +42,10 @@ type Lifecycle struct {
 	DataDB      models.DB
 	//MoCache     MoCache
 	Variables map[string]interface{}
-	UrlPrefix string
+	URLPrefix string
 	CheckUser revel_sso.CheckFunc
 
+	MenuList []web_app.Menu
 	//timer atomic.Value
 }
 

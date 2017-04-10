@@ -19,11 +19,8 @@ func (onlineUser *OnlineUser) TableName() string {
 }
 
 func (onlineUser *OnlineUser) Validate(validation *revel.Validation) bool {
-
 	validation.Required(onlineUser.AuthAccountID).Key("onlineUser.AuthAccountID")
-
 	validation.MaxSize(onlineUser.Macaddress, 200).Key("onlineUser.Macaddress")
-
 	return validation.HasErrors()
 }
 

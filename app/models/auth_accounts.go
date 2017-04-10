@@ -22,21 +22,14 @@ func (authAccount *AuthAccount) TableName() string {
 }
 
 func (authAccount *AuthAccount) Validate(validation *revel.Validation) bool {
-
 	validation.Required(authAccount.Name).Key("authAccount.Name")
-
 	validation.MinSize(authAccount.Password, 8).Key("authAccount.Password")
-
 	validation.MaxSize(authAccount.Password, 250).Key("authAccount.Password")
-
 	if "" != authAccount.Email {
 		validation.Email(authAccount.Email).Key("authAccount.Email")
 	}
-
 	validation.Required(authAccount.Sex).Key("authAccount.Sex")
-
 	validation.MaxSize(authAccount.Description, 2000).Key("authAccount.Description")
-
 	return validation.HasErrors()
 }
 

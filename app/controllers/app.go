@@ -23,6 +23,7 @@ type App struct {
 
 func (c *App) initLifecycle() revel.Result {
 	c.Lifecycle = app.Lifecycle
+	c.ViewArgs["menuList"] = c.Lifecycle.MenuList
 	return nil
 }
 
@@ -33,7 +34,7 @@ type UploadResult struct {
 }
 
 func (c App) beforeInvoke() revel.Result {
-	c.ViewArgs["active"] = c.Name
+	c.ViewArgs["controller"] = c.Name
 	return nil
 }
 
