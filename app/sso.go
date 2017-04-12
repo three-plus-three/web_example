@@ -15,7 +15,7 @@ import (
 )
 
 func initSSO(env *commons.Environment) revel_sso.CheckFunc {
-	ssoURL := env.GetServiceConfig(commons.ENV_WSERVER_PROXY_ID).UrlFor(env.DaemonUrlPath, "/sso")
+	ssoURL := httputils.JoinURLPath(env.DaemonUrlPath, "/sso")
 	ssoClient, err := sso.NewClient(ssoURL)
 	if err != nil {
 		log.Println(err)

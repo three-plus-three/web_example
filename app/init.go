@@ -32,6 +32,7 @@ func init() {
 		HeaderFilter,                  // Add some security based headers
 		revel.InterceptorFilter,       // Run interceptors around the action.
 		revel.CompressFilter,          // Compress the result.
+		GlobalVariablesFilter,         // set global variables
 		revel.ActionInvoker,           // Invoke the action.
 	}
 
@@ -107,4 +108,12 @@ func SessionFilter(c *revel.Controller, filterChain []revel.Filter) {
 	//if GlobalSessionFilter != nil {
 	GlobalSessionFilter(c, filterChain)
 	//}
+}
+
+// GlobalVariablesFilter will set global variables
+func GlobalVariablesFilter(c *revel.Controller, fc []revel.Filter) {
+	// Make global vars available in templates as {{.global.xyz}}
+	c.ViewArgs["global"] = Lifecycle.Variables
+
+	fc[0](c, fc[1:]) // Execute the next filter stage.
 }
