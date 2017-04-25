@@ -96,11 +96,10 @@ func (c App) ensureFileName(dir string, file string) (string, error) {
 	}
 
 	if len(suffixes) > 0 {
-		sort.Sort(libs.Int64Slice(suffixes))
+		sort.Slice(suffixes, func(i, j int) bool { return suffixes[i] < suffixes[j] })
 		return fmt.Sprintf("%s(%d).%s", filename, suffixes[len(suffixes)-1]+1, ext), nil
-	} else {
-		return file, nil
 	}
+	return file, nil
 }
 
 // func (c *ApplicationController) checkUser() revel.Result {

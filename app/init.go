@@ -11,6 +11,7 @@ import (
 	"github.com/three-plus-three/web_example/app/models"
 
 	"github.com/revel/revel"
+	_ "github.com/three-plus-three/modules/bind"
 	"github.com/three-plus-three/sessions"
 	sso "github.com/three-plus-three/sso/client"
 )

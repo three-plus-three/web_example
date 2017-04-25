@@ -1,13 +1,7 @@
-{{set . "title" "新建OnlineUsers"}}
+{{set . "title" "新建OnlineUser"}}
 {{append . "moreStyles" "/public/css/form.css"}}
 {{append . "moreScripts" "/self/public/js/online_users/online_users.js"}}
 {{template "header.html" .}}
-<div class="ibox float-e-margins">
-    <div class="ibox-title">
-        新建OnlineUser
-        <div class="ibox-tools"></div>
-    </div>
-    <div class="ibox-content">
         <form action="{{url "OnlineUsers.Create" }}" method="POST" class="form-horizontal" id="online_users-insert">
         {{- $inEditMode := .inEditMode}}{{ set . "inEditMode" true}}
         {{template "OnlineUsers/edit_fields.html" .}}
@@ -19,6 +13,4 @@
             </div>
         </div>
         </form>
-    </div>
-</div>
 {{template "footer.html" .}}

@@ -1,4 +1,4 @@
-call gengen.bat mvc -override=true -controller=App -projectPath=github.com/three-plus-three/web_example -customPath=/self -root specs 
+call gengen.bat mvc -controller=App -projectPath=github.com/three-plus-three/web_example -customPath=/self -root specs 
 @if errorlevel 1 goto failed
 call gengen.bat db -override=true -root specs -output=app/models
 @if errorlevel 1 goto failed

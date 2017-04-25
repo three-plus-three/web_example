@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"github.com/go-xorm/xorm"
+	"github.com/revel/revel"
 	"github.com/runner-mei/orm"
 )
 
@@ -16,7 +17,6 @@ func (db *DB) OnlineUsers() *orm.Collection {
 		return &OnlineUser{}
 	})(db.Engine)
 }
-
 func (db *DB) AuthAccounts() *orm.Collection {
 	return orm.New(func() interface{} {
 		return &AuthAccount{}
@@ -38,12 +38,15 @@ func InitTables(engine *xorm.Engine) error {
 			if !strings.Contains(err.Error(), "already exists") {
 				return err
 			}
+			revel.WARN.Println(err)
 		}
 
 		if err := engine.CreateUniques(bean); err != nil {
-			if !strings.Contains(err.Error(), "already exists") {
+			if !strings.Contains(err.Error(), "already exists") &&
+				!strings.Contains(err.Error(), "create unique index") {
 				return err
 			}
+			revel.WARN.Println(err)
 		}
 	}
 	return nil

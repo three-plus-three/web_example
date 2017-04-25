@@ -13,7 +13,8 @@
         <a id='auth_accounts-delete' href='' url='{{url "AuthAccounts.DeleteByIDs"}}'  class="btn btn-outline btn-default" mode="+" target="_self">
             <i class="fa fa-trash"></i> 删除
         </a>
-        {{- end}}<form action="{{url "AuthAccounts.Index" 0 0}}" method="POST" id='auth_accounts-quick-form' class="form-inline"  style="display: inline;">
+        {{- end}}
+        <form action="{{url "AuthAccounts.Index"}}" method="POST" id='auth_accounts-quick-form' class="form-inline"  style="display: inline;">
             <input type="text" name="query">
             <a href="javascript:document.getElementById('auth_accounts-quick-form').submit()" >
                 <i class="fa fa-search"></i> 查询

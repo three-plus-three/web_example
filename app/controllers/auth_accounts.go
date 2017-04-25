@@ -1,12 +1,12 @@
 package controllers
 
 import (
-	"github.com/three-plus-three/web_example/app/libs"
 	"github.com/three-plus-three/web_example/app/models"
 	"github.com/three-plus-three/web_example/app/routes"
 
 	"github.com/revel/revel"
 	"github.com/runner-mei/orm"
+	"github.com/three-plus-three/modules/toolbox"
 )
 
 // AuthAccounts - 控制器
@@ -15,20 +15,25 @@ type AuthAccounts struct {
 }
 
 // Index 列出所有记录
-func (c AuthAccounts) Index(pageIndex int, pageSize int) revel.Result {
+func (c AuthAccounts) Index() revel.Result {
 	var cond orm.Cond
-	if name := c.Params.Get("query"); name != "" {
+	var name string
+	c.Params.Bind(&name, "query")
+	if name != "" {
 		cond = orm.Cond{"name LIKE": "%" + name + "%"}
 	}
 
 	total, err := c.Lifecycle.DB.AuthAccounts().Where().And(cond).Count()
 	if err != nil {
-		c.ViewArgs["errors"] = err.Error()
+		c.Validation.Error(err.Error())
 		return c.Render(err)
 	}
 
+	var pageIndex, pageSize int
+	c.Params.Bind(&pageIndex, "pageIndex")
+	c.Params.Bind(&pageSize, "pageSize")
 	if pageSize <= 0 {
-		pageSize = libs.DEFAULT_SIZE_PER_PAGE
+		pageSize = toolbox.DEFAULT_SIZE_PER_PAGE
 	}
 
 	var authAccounts []models.AuthAccount
@@ -38,11 +43,11 @@ func (c AuthAccounts) Index(pageIndex int, pageSize int) revel.Result {
 		Limit(pageSize).
 		All(&authAccounts)
 	if err != nil {
-		c.ViewArgs["errors"] = err.Error()
+		c.Validation.Error(err.Error())
 		return c.Render()
 	}
 
-	paginator := libs.NewPaginator(c.Request.Request, pageSize, total)
+	paginator := toolbox.NewPaginator(c.Request.Request, pageSize, total)
 	return c.Render(authAccounts, paginator)
 }
 
@@ -74,7 +79,7 @@ func (c AuthAccounts) Create(authAccount *models.AuthAccount) revel.Result {
 	}
 
 	c.Flash.Success(revel.Message(c.Request.Locale, "insert.success"))
-	return c.Redirect(routes.AuthAccounts.Index(0, 0))
+	return c.Redirect(routes.AuthAccounts.Index())
 }
 
 // Edit 编辑指定 id 的记录
@@ -88,7 +93,7 @@ func (c AuthAccounts) Edit(id int64) revel.Result {
 			c.Flash.Error(err.Error())
 		}
 		c.FlashParams()
-		return c.Redirect(routes.AuthAccounts.Index(0, 0))
+		return c.Redirect(routes.AuthAccounts.Index())
 	}
 
 	return c.Render(authAccount)
@@ -119,7 +124,7 @@ func (c AuthAccounts) Update(authAccount *models.AuthAccount) revel.Result {
 		return c.Redirect(routes.AuthAccounts.Edit(int64(authAccount.ID)))
 	}
 	c.Flash.Success(revel.Message(c.Request.Locale, "update.success"))
-	return c.Redirect(routes.AuthAccounts.Index(0, 0))
+	return c.Redirect(routes.AuthAccounts.Index())
 }
 
 // Delete 按 id 删除记录
@@ -134,14 +139,14 @@ func (c AuthAccounts) Delete(id int64) revel.Result {
 	} else {
 		c.Flash.Success(revel.Message(c.Request.Locale, "delete.success"))
 	}
-	return c.Redirect(AuthAccounts.Index)
+	return c.Redirect(routes.AuthAccounts.Index())
 }
 
 // DeleteByIDs 按 id 列表删除记录
 func (c AuthAccounts) DeleteByIDs(id_list []int64) revel.Result {
 	if len(id_list) == 0 {
 		c.Flash.Error("请至少选择一条记录！")
-		return c.Redirect(AuthAccounts.Index)
+		return c.Redirect(routes.AuthAccounts.Index())
 	}
 	_, err := c.Lifecycle.DB.AuthAccounts().Where().And(orm.Cond{"id IN": id_list}).Delete()
 	if nil != err {
@@ -149,5 +154,5 @@ func (c AuthAccounts) DeleteByIDs(id_list []int64) revel.Result {
 	} else {
 		c.Flash.Success(revel.Message(c.Request.Locale, "delete.success"))
 	}
-	return c.Redirect(AuthAccounts.Index)
+	return c.Redirect(routes.AuthAccounts.Index())
 }

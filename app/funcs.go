@@ -8,6 +8,7 @@ import (
 
 	"github.com/revel/revel"
 	"github.com/three-plus-three/forms"
+	"github.com/three-plus-three/modules/functions"
 )
 
 func ResourcesURLFor(s string) string {
@@ -77,7 +78,7 @@ func initTemplateFuncs(env *commons.Environment) {
 		return revel.AppRoot
 	}
 
-	funcs := HtmlFuncMap()
+	funcs := functions.HtmlFuncMap()
 	for k, v := range funcs {
 		if _, ok := revel.TemplateFuncs[k]; !ok {
 			revel.TemplateFuncs[k] = v

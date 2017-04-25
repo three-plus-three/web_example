@@ -51,4 +51,20 @@ $(function () {
 
         return false
     });
+
+
+    $("#OnlineUserTable tr").each(function() {
+        var recordURL = $(this).attr("x-record-url")
+        if(!!!recordURL) {
+            return
+        }
+        $.ajax({
+            url: recordURL,
+            success: function(record){
+            },
+            error: function(r, status, error)  {
+                console.log(recordURL, error, r.responseText)
+            },
+        });
+    })
 });

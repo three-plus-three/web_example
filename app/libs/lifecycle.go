@@ -3,35 +3,13 @@ package libs
 import (
 	"cn/com/hengwei/commons"
 	"cn/com/hengwei/commons/types"
-	"database/sql"
 
-	"github.com/Masterminds/squirrel"
 	"github.com/go-xorm/xorm"
 	_ "github.com/lib/pq"
 	"github.com/three-plus-three/sso/client/revel_sso"
 	"github.com/three-plus-three/web_example/app/models"
 	web_app "github.com/three-plus-three/web_templates/app"
 )
-
-// DbRunner wraps sql.DB to implement Runner.
-type DbRunner struct {
-	*sql.DB
-}
-
-// QueryRow wraps QueryRow to implement RowScanner.
-func (r DbRunner) QueryRow(query string, args ...interface{}) squirrel.RowScanner {
-	return r.DB.QueryRow(query, args...)
-}
-
-// TxRunner wraps sql.Tx to implement Runner.
-type TxRunner struct {
-	*sql.Tx
-}
-
-// QueryRow wraps QueryRow to implement RowScanner.
-func (r TxRunner) QueryRow(query string, args ...interface{}) squirrel.RowScanner {
-	return r.Tx.QueryRow(query, args...)
-}
 
 // Lifecycle 表示一个运行周期，它包含了所有业务相关的对象
 type Lifecycle struct {
