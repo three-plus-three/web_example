@@ -10,3 +10,4 @@ paginator.first_page= first
 insert.success=insert success.
 update.success=update success.
 delete.success=delete success.
+select.empty=

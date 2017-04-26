@@ -5,3 +5,4 @@ update.success=更新成功
 delete.success=删除成功
 update.record_not_found=修改失败，没有找到该记录
 delete.record_not_found=删除失败，没有找到该记录
+select.empty=无
