@@ -6,9 +6,9 @@ import (
 
 	"github.com/go-xorm/xorm"
 	_ "github.com/lib/pq"
+	"github.com/three-plus-three/modules/toolbox"
 	"github.com/three-plus-three/sso/client/revel_sso"
 	"github.com/three-plus-three/web_example/app/models"
-	web_app "github.com/three-plus-three/web_templates/app"
 )
 
 // Lifecycle 表示一个运行周期，它包含了所有业务相关的对象
@@ -23,7 +23,7 @@ type Lifecycle struct {
 	URLPrefix string
 	CheckUser revel_sso.CheckFunc
 
-	MenuList []web_app.Menu
+	MenuList []toolbox.Menu
 	//timer atomic.Value
 }
 

@@ -10,4 +10,6 @@ paginator.first_page= first
 insert.success=insert success.
 update.success=update success.
 delete.success=delete success.
+update.record_not_found=update fail, record isn't found.
+delete.record_not_found=delete fail, record isn't found.
 select.empty=
