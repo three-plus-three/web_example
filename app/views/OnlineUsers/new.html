@@ -1,7 +1,7 @@
 {{set . "title" "新建OnlineUser"}}
 {{append . "moreStyles" "/public/css/form.css"}}
 {{append . "moreScripts" "/self/public/js/online_users/online_users.js"}}
-{{template "header.html" .}}
+{{template "header_box.html" .}}
         <form action="{{url "OnlineUsers.Create" }}" method="POST" class="form-horizontal" id="online_users-insert">
         {{- $inEditMode := .inEditMode}}{{ set . "inEditMode" true}}
         {{template "OnlineUsers/edit_fields.html" .}}
@@ -13,4 +13,4 @@
             </div>
         </div>
         </form>
-{{template "footer.html" .}}
+{{template "footer_box.html" .}}

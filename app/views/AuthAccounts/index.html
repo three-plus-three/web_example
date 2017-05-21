@@ -5,12 +5,16 @@
 {{append . "moreScripts" "/public/js/plugins/bootbox/bootbox.min.js"}}
 {{end}}
 {{append . "moreScripts" "/self/public/js/auth_accounts/auth_accounts.js"}}
-{{template "header.html" .}}
+{{template "header_box.html" .}}
     {{template "AuthAccounts/quick-bar.html" .}}
     <table id="AuthAccountTable" class="table table-bordered table-striped table-highlight ">
       <thead>
       <tr><th><input type="checkbox" id="auth_accounts-all-checker" /></th>
         
+        {{table_column_title . "manager_id" "领导1"}}
+        {{table_column_title . "manager_id" "领导1#"}}
+        {{table_column_title . "leader_id" "领导2"}}
+        {{table_column_title . "leader_id" "领导2#"}}
         {{table_column_title . "name" "用户名"}}
         {{table_column_title . "email" "邮箱"}}
         {{table_column_title . "sex" "性别"}}
@@ -25,13 +29,41 @@
       <tbody>
       {{- range $idx, $v := .authAccounts}}
         <tr x-record-key="{{$v.ID}}">
-            <td><input type="checkbox" class="auth_accounts-row-checker" key="{{$v.ID}}" url="{{url "AuthAccounts.Edit" $v.ID}}"/></td>
-            <td >{{$v.Name}}</td>
-            <td >{{$v.Email}}</td>
-            <td >{{$v.Sex}}</td>
-            <td >{{$v.Description}}</td>
-            <td >{{datetime $v.CreatedAt}}</td>
-            <td >{{datetime $v.UpdatedAt}}</td>
+            <td><input type="checkbox" class="auth_accounts-row-checker" key="{{$v.ID}}" url="{{url "AuthAccounts.Edit" $v.ID}}"/></td>{{- if $.authAccounts}}
+              {{- $rValue := index $.authAccountByID $v.ManagerID}}
+              <td>
+              {{- if $rValue}}
+                {{- $rValue.Name}}
+              {{- end -}}
+              </td>
+              <td>
+              {{- if $rValue}}
+                {{- $rValue.ID}}
+              {{- end -}}
+              </td>{{- end}}{{- if $.authAccounts}}
+              {{- $rValue := index $.authAccountByID $v.LeaderID}}
+              <td>
+              {{- if $rValue}}
+                {{- $rValue.Name}}
+              {{- end -}}
+              </td>
+              <td>
+              {{- if $rValue}}
+                {{- $rValue.ID}}
+              {{- end -}}
+              </td>{{- end}}
+            <td >
+              {{-  $v.Name}}</td>
+            <td >
+              {{-  $v.Email}}</td>
+            <td >
+              {{- sex_format $v.Sex}}</td>
+            <td >
+              {{-  $v.Description}}</td>
+            <td >
+              {{- datetime $v.CreatedAt}}</td>
+            <td >
+              {{- datetime $v.UpdatedAt}}</td>
         {{- if current_user_has_write_permission $raw "auth_accounts"}}
         <td>
           {{- if current_user_has_edit_permission $raw "auth_accounts"}}
@@ -53,4 +85,4 @@
       <tbody>
     </table>
     {{template "paginator.html" .}}
-{{template "footer.html" .}}
+{{template "footer_box.html" .}}

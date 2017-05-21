@@ -1,6 +1,6 @@
 {{set . "title" "编辑用户"}}
 {{append . "moreScripts" "/self/public/js/auth_accounts/auth_accounts.js"}}
-{{template "header.html" .}}
+{{template "header_box.html" .}}
         <form action="{{url "AuthAccounts.Update" }}" method="POST" class="form-horizontal" id="auth_accounts-edit">
         <input type="hidden" name="_method" value="PUT">
         {{hidden_field . "authAccount.ID" | render}}
@@ -14,4 +14,4 @@
             </div>
         </div>
         </form>
-{{template "footer.html" .}}
+{{template "footer_box.html" .}}

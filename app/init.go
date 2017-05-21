@@ -45,6 +45,8 @@ func init() {
 			os.Exit(-1)
 			return
 		}
+		env.Db.Models.Port = "5432"
+		env.Db.Data.Port = "5432"
 		if revel.RunMode == "test" {
 			env.Db.Models.Schema = env.Db.Models.Schema + "_models_test"
 			env.Db.Data.Schema = env.Db.Data.Schema + "_test"

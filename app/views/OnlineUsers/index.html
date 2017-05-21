@@ -5,7 +5,7 @@
 {{append . "moreScripts" "/public/js/plugins/bootbox/bootbox.min.js"}}
 {{end}}
 {{append . "moreScripts" "/self/public/js/online_users/online_users.js"}}
-{{template "header.html" .}}
+{{template "header_box.html" .}}
     {{template "OnlineUsers/quick-bar.html" .}}
     <table id="OnlineUserTable" class="table table-bordered table-striped table-highlight ">
       <thead>
@@ -22,15 +22,14 @@
       <tbody>
       {{- range $idx, $v := .onlineUsers}}
         <tr x-record-key="{{$v.ID}}">
-            <td><input type="checkbox" class="online_users-row-checker" key="{{$v.ID}}" url="{{url "OnlineUsers.Edit" $v.ID}}"/></td>
-            {{- if $.authAccounts}}
-              {{- $rValue := index $.authAccounts $v.AuthAccountID}}
-            {{- else}}
-            <td></td>
-            {{- end}}
-            <td >{{$v.Hostaddress}}</td>
-            <td >{{$v.Macaddress}}</td>
-            <td >{{datetime $v.CreatedAt}}</td>
+            <td><input type="checkbox" class="online_users-row-checker" key="{{$v.ID}}" url="{{url "OnlineUsers.Edit" $v.ID}}"/></td>{{- if $.authAccounts}}
+              {{- $rValue := index $.authAccountByID $v.AuthAccountID}}{{- end}}
+            <td >
+              {{-  $v.Hostaddress}}</td>
+            <td >
+              {{-  $v.Macaddress}}</td>
+            <td >
+              {{- datetime $v.CreatedAt}}</td>
         {{- if current_user_has_write_permission $raw "online_users"}}
         <td>
           {{- if current_user_has_edit_permission $raw "online_users"}}
@@ -52,4 +51,4 @@
       <tbody>
     </table>
     {{template "paginator.html" .}}
-{{template "footer.html" .}}
+{{template "footer_box.html" .}}

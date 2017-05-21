@@ -8,6 +8,8 @@ import (
 
 type AuthAccount struct {
 	ID          int64     `json:"id" xorm:"id pk autoincr"`
+	ManagerID   int64     `json:"manager_id,omitempty" xorm:"manager_id"`
+	LeaderID    int64     `json:"leader_id,omitempty" xorm:"leader_id"`
 	Name        string    `json:"name" xorm:"name unique notnull"`
 	Password    string    `json:"password,omitempty" xorm:"password"`
 	Email       string    `json:"email,omitempty" xorm:"email"`
@@ -37,6 +39,10 @@ func KeyForAuthAccounts(key string) string {
 	switch key {
 	case "id":
 		return "authAccount.ID"
+	case "manager_id":
+		return "authAccount.ManagerID"
+	case "leader_id":
+		return "authAccount.LeaderID"
 	case "name":
 		return "authAccount.Name"
 	case "password":

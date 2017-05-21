@@ -1,13 +1,29 @@
 package controllers
 
 import (
+	"strconv"
+
 	"github.com/three-plus-three/web_example/app/models"
 	"github.com/three-plus-three/web_example/app/routes"
 
 	"github.com/revel/revel"
 	"github.com/runner-mei/orm"
+	"github.com/three-plus-three/forms"
 	"github.com/three-plus-three/modules/toolbox"
 )
+
+func init() {
+	revel.TemplateFuncs["sex_format"] = func(value string) string {
+		switch value {
+		case "male":
+			return "男"
+		case "female":
+			return "女"
+		default:
+			return value
+		}
+	}
+}
 
 // AuthAccounts - 控制器
 type AuthAccounts struct {
@@ -47,13 +63,79 @@ func (c AuthAccounts) Index() revel.Result {
 		return c.Render()
 	}
 
+	if len(authAccounts) > 0 {
+		var authAccountIDList = make([]int64, 0, len(authAccounts))
+		for idx := range authAccounts {
+			authAccountIDList = append(authAccountIDList, authAccounts[idx].ManagerID)
+		}
+		var authAccountByID map[int64]models.AuthAccount
+		var authAccountList []models.AuthAccount
+		err = c.Lifecycle.DB.AuthAccounts().Where().
+			And(orm.Cond{"id IN": authAccountIDList}).
+			All(&authAccountList)
+		if err != nil {
+			c.Validation.Error("load AuthAccount fail, " + err.Error())
+		} else {
+			if authAccountByID == nil {
+				authAccountByID = make(map[int64]models.AuthAccount, len(authAccountList))
+			}
+			for idx := range authAccountList {
+				authAccountByID[authAccountList[idx].ID] = authAccountList[idx]
+			}
+			c.ViewArgs["authAccountByID"] = authAccountByID
+		}
+		authAccountIDList = authAccountIDList[:0]
+		for idx := range authAccounts {
+			authAccountIDList = append(authAccountIDList, authAccounts[idx].LeaderID)
+		}
+		authAccountList = nil
+		err = c.Lifecycle.DB.AuthAccounts().Where().
+			And(orm.Cond{"id IN": authAccountIDList}).
+			All(&authAccountList)
+		if err != nil {
+			c.Validation.Error("load AuthAccount fail, " + err.Error())
+		} else {
+			if authAccountByID == nil {
+				authAccountByID = make(map[int64]models.AuthAccount, len(authAccountList))
+			}
+			for idx := range authAccountList {
+				authAccountByID[authAccountList[idx].ID] = authAccountList[idx]
+			}
+			c.ViewArgs["authAccountByID"] = authAccountByID
+		}
+	}
+
 	paginator := toolbox.NewPaginator(c.Request.Request, pageSize, total)
 	return c.Render(authAccounts, paginator)
 }
 
 // New 编辑新建记录
 func (c AuthAccounts) New() revel.Result {
+	var err error
 
+	var authAccounts []models.AuthAccount
+	err = c.Lifecycle.DB.AuthAccounts().Where().
+		All(&authAccounts)
+	if err != nil {
+		c.Validation.Error("load AuthAccount fail, " + err.Error())
+		c.ViewArgs["authAccounts"] = []forms.InputChoice{{
+			Value: "",
+			Label: revel.Message(c.Request.Locale, "select.empty"),
+		}}
+	} else {
+		var optAuthAccounts = make([]forms.InputChoice, 0, len(authAccounts))
+		optAuthAccounts = append(optAuthAccounts, forms.InputChoice{
+			Value: "",
+			Label: revel.Message(c.Request.Locale, "select.empty"),
+		})
+		for _, o := range authAccounts {
+			optAuthAccounts = append(optAuthAccounts, forms.InputChoice{
+				Value: strconv.FormatInt(int64(o.ID), 10),
+				Label: o.Name,
+			})
+		}
+		c.ViewArgs["authAccounts"] = optAuthAccounts
+	}
 	return c.Render()
 }
 
@@ -94,6 +176,30 @@ func (c AuthAccounts) Edit(id int64) revel.Result {
 		}
 		c.FlashParams()
 		return c.Redirect(routes.AuthAccounts.Index())
+	}
+
+	var authAccounts []models.AuthAccount
+	err = c.Lifecycle.DB.AuthAccounts().Where().
+		All(&authAccounts)
+	if err != nil {
+		c.Validation.Error("load AuthAccount fail, " + err.Error())
+		c.ViewArgs["authAccounts"] = []forms.InputChoice{{
+			Value: "",
+			Label: revel.Message(c.Request.Locale, "select.empty"),
+		}}
+	} else {
+		var optAuthAccounts = make([]forms.InputChoice, 0, len(authAccounts))
+		optAuthAccounts = append(optAuthAccounts, forms.InputChoice{
+			Value: "",
+			Label: revel.Message(c.Request.Locale, "select.empty"),
+		})
+		for _, o := range authAccounts {
+			optAuthAccounts = append(optAuthAccounts, forms.InputChoice{
+				Value: strconv.FormatInt(int64(o.ID), 10),
+				Label: o.Name,
+			})
+		}
+		c.ViewArgs["authAccounts"] = optAuthAccounts
 	}
 
 	return c.Render(authAccount)

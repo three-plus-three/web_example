@@ -1,6 +1,6 @@
 {{set . "title" "编辑OnlineUser"}}
 {{append . "moreScripts" "/self/public/js/online_users/online_users.js"}}
-{{template "header.html" .}}
+{{template "header_box.html" .}}
         <form action="{{url "OnlineUsers.Update" }}" method="POST" class="form-horizontal" id="online_users-edit">
         <input type="hidden" name="_method" value="PUT">
         {{hidden_field . "onlineUser.ID" | render}}
@@ -14,4 +14,4 @@
             </div>
         </div>
         </form>
-{{template "footer.html" .}}
+{{template "footer_box.html" .}}

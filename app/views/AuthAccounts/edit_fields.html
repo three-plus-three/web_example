@@ -1,4 +1,6 @@
 
+    {{select_field . "authAccount.ManagerID" "领导1:" .authAccounts  | render}}
+    {{select_field . "authAccount.LeaderID" "领导2:" .authAccounts  | render}}
     {{text_field . "authAccount.Name" "用户名:" | f_setEditMode .inEditMode  | render}}
     {{password_field . "authAccount.Password" "密码:"  | render}}
       {{email_field . "authAccount.Email" "邮箱:"  | render}}

@@ -12,6 +12,9 @@ import (
 	"github.com/three-plus-three/modules/toolbox"
 )
 
+func init() {
+}
+
 // OnlineUsers - 控制器
 type OnlineUsers struct {
 	App
@@ -51,24 +54,25 @@ func (c OnlineUsers) Index() revel.Result {
 	}
 
 	if len(onlineUsers) > 0 {
-
 		var authAccountIDList = make([]int64, 0, len(onlineUsers))
 		for idx := range onlineUsers {
 			authAccountIDList = append(authAccountIDList, onlineUsers[idx].AuthAccountID)
 		}
-
-		var authAccounts []models.AuthAccount
+		var authAccountByID map[int64]models.AuthAccount
+		var authAccountList []models.AuthAccount
 		err = c.Lifecycle.DB.AuthAccounts().Where().
 			And(orm.Cond{"id IN": authAccountIDList}).
-			All(&authAccounts)
+			All(&authAccountList)
 		if err != nil {
 			c.Validation.Error("load AuthAccount fail, " + err.Error())
 		} else {
-			var authAccountsByID = make(map[int64]models.AuthAccount, len(authAccounts))
-			for idx := range authAccounts {
-				authAccountsByID[authAccounts[idx].ID] = authAccounts[idx]
+			if authAccountByID == nil {
+				authAccountByID = make(map[int64]models.AuthAccount, len(authAccountList))
 			}
-			c.ViewArgs["authAccounts"] = authAccountsByID
+			for idx := range authAccountList {
+				authAccountByID[authAccountList[idx].ID] = authAccountList[idx]
+			}
+			c.ViewArgs["authAccountByID"] = authAccountByID
 		}
 	}
 
@@ -85,7 +89,10 @@ func (c OnlineUsers) New() revel.Result {
 		All(&authAccounts)
 	if err != nil {
 		c.Validation.Error("load AuthAccount fail, " + err.Error())
-		c.ViewArgs["authAccounts"] = []forms.InputChoice{}
+		c.ViewArgs["authAccounts"] = []forms.InputChoice{{
+			Value: "",
+			Label: revel.Message(c.Request.Locale, "select.empty"),
+		}}
 	} else {
 		var optAuthAccounts = make([]forms.InputChoice, 0, len(authAccounts))
 		for _, o := range authAccounts {
@@ -143,7 +150,10 @@ func (c OnlineUsers) Edit(id int64) revel.Result {
 		All(&authAccounts)
 	if err != nil {
 		c.Validation.Error("load AuthAccount fail, " + err.Error())
-		c.ViewArgs["authAccounts"] = []forms.InputChoice{}
+		c.ViewArgs["authAccounts"] = []forms.InputChoice{{
+			Value: "",
+			Label: revel.Message(c.Request.Locale, "select.empty"),
+		}}
 	} else {
 		var optAuthAccounts = make([]forms.InputChoice, 0, len(authAccounts))
 		for _, o := range authAccounts {

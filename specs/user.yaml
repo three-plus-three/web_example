@@ -11,6 +11,24 @@ fields:
   required: true
   readonly: true
   unique: true
+- name: manager_id
+  label: 领导1
+  type: biginteger
+  annotations:
+    referenceFields:
+    - name: name
+      label: 领导1
+    - name: id
+      label: 领导1#
+- name: leader_id
+  label: 领导2
+  type: biginteger
+  annotations:
+    referenceFields:
+    - name: name
+      label: 领导2
+    - name: id
+      label: 领导2#
 - name: name
   description: 用户名
   label: 用户名
@@ -63,3 +81,8 @@ fields:
   type: datetime
   annotations:
     editDisabled: true
+belongsTo:
+- name: manager_id
+  target: AuthAccount
+- name: leader_id
+  target: AuthAccount
