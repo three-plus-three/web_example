@@ -2,12 +2,13 @@
   pk:
     id: 'PK_GENERATE(auth_account_key)'
   fields:
-    manager_id: 4063500471666328670
-    leader_id: 2754431350574744742
-    name: mra
-    password: amqazcjvg
-    email: Aliquid non nulla.
-    sex: Sed libero reprehenderit.
-    description: Nam occaecati deserunt at incidunt at vel.
-    created_at: 1981-10-13T20:23:50+08:00
-    updated_at: 1984-02-06T05:37:01+08:00
+    manager_id: 315196730230292607
+    leader_id: 1436673240959513871
+    name: mkm
+    password: xq1f6f9m5
+    email: Repellendus velit velit.
+    sex: Repellendus nobis voluptatem corporis harum.
+    level: Quam perferendis voluptate.
+    description: Ut recusandae ut at deserunt.
+    created_at: 1982-02-15T16:18:56+08:00
+    updated_at: 2005-07-05T06:47:24+08:00

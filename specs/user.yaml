@@ -62,6 +62,13 @@ fields:
       value: male
     - label: 女
       value: female
+- name: level
+  description: 级别
+  label: 级别
+  type: string
+  required: true
+  annotations:
+    enumerationSource: userLevel
 - name: description
   description: 描述
   label: 描述

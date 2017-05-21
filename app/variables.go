@@ -6,6 +6,9 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+
+	"github.com/revel/revel"
+	"github.com/three-plus-three/forms"
 )
 
 func readVariables(env *commons.Environment) map[string]interface{} {
@@ -21,6 +24,21 @@ func readVariables(env *commons.Environment) map[string]interface{} {
 			env.Fs.FromDataConfig("resources/profiles/footer.txt"),
 			env.Fs.FromData("resources/profiles/footer.txt"),
 			filepath.Join(os.Getenv("hw_root_dir"), "data/resources/profiles/footer.txt")}, "© 2017 恒维信息技术(上海)有限公司, 保留所有版权。"),
+	}
+
+	variables["userLevel"] = []forms.InputChoice{{Value: "1", Label: "high"},
+		{Value: "2", Label: "modium"},
+		{Value: "3", Label: "low"}}
+	revel.TemplateFuncs["userLevel_format"] = func(level string) string {
+		switch level {
+		case "1":
+			return "high"
+		case "2":
+			return "modium"
+		case "3":
+			return "low"
+		}
+		return level
 	}
 	return variables
 }

@@ -18,6 +18,7 @@
         {{table_column_title . "name" "用户名"}}
         {{table_column_title . "email" "邮箱"}}
         {{table_column_title . "sex" "性别"}}
+        {{table_column_title . "level" "级别"}}
         {{table_column_title . "description" "描述"}}
         {{table_column_title . "created_at" "创建时间"}}
         {{table_column_title . "updated_at" "修改时间"}}
@@ -58,6 +59,8 @@
               {{-  $v.Email}}</td>
             <td >
               {{- sex_format $v.Sex}}</td>
+            <td >
+              {{- userLevel_format $v.Level}}</td>
             <td >
               {{-  $v.Description}}</td>
             <td >

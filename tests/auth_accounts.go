@@ -39,6 +39,7 @@ func (t AuthAccountsTest) TestIndex() {
 	t.AssertContains(fmt.Sprint(authAccount.Name))
 	t.AssertContains(fmt.Sprint(authAccount.Email))
 	t.AssertContains(fmt.Sprint(authAccount.Sex))
+	t.AssertContains(fmt.Sprint(authAccount.Level))
 	t.AssertContains(fmt.Sprint(authAccount.Description))
 }
 
@@ -53,23 +54,25 @@ func (t AuthAccountsTest) TestCreate() {
 	t.ClearTable("tpt_auth_accounts")
 	v := url.Values{}
 
-	v.Set("authAccount.ManagerID", "5375582906807793585")
+	v.Set("authAccount.ManagerID", "116914677907921076")
 
-	v.Set("authAccount.LeaderID", "2697265754363136325")
+	v.Set("authAccount.LeaderID", "4974149537504895690")
 
-	v.Set("authAccount.Name", "ez4")
+	v.Set("authAccount.Name", "dmz")
 
-	v.Set("authAccount.Password", "w46sl03dd")
+	v.Set("authAccount.Password", "m19ddmros")
 
-	v.Set("authAccount.Email", "Minima et provident quidem sunt.")
+	v.Set("authAccount.Email", "Ducimus id consectetur ut maxime.")
 
-	v.Set("authAccount.Sex", "Delectus omnis facilis ut est et dolorum voluptas.")
+	v.Set("authAccount.Sex", "Ratione et sint magni maiores veniam expedita.")
 
-	v.Set("authAccount.Description", "Provident praesentium eius eos laboriosam ut.")
+	v.Set("authAccount.Level", "Doloribus cupiditate sint vel ut et.")
 
-	v.Set("authAccount.CreatedAt", "1979-01-16T04:53:27+08:00")
+	v.Set("authAccount.Description", "Earum non molestiae labore sed tenetur minus.")
 
-	v.Set("authAccount.UpdatedAt", "1971-09-07T14:12:15+08:00")
+	v.Set("authAccount.CreatedAt", "2000-12-31T00:34:23+08:00")
+
+	v.Set("authAccount.UpdatedAt", "1981-09-19T07:00:13+08:00")
 
 	t.Post(t.ReverseUrl("AuthAccounts.Create"), "application/x-www-form-urlencoded", strings.NewReader(v.Encode()))
 	t.AssertOk()
@@ -90,6 +93,7 @@ func (t AuthAccountsTest) TestCreate() {
 	t.AssertEqual(fmt.Sprint(authAccount.Password), v.Get("authAccount.Password"))
 	t.AssertEqual(fmt.Sprint(authAccount.Email), v.Get("authAccount.Email"))
 	t.AssertEqual(fmt.Sprint(authAccount.Sex), v.Get("authAccount.Sex"))
+	t.AssertEqual(fmt.Sprint(authAccount.Level), v.Get("authAccount.Level"))
 	t.AssertEqual(fmt.Sprint(authAccount.Description), v.Get("authAccount.Description"))
 }
 
@@ -115,6 +119,7 @@ func (t AuthAccountsTest) TestEdit() {
 	t.AssertContains(fmt.Sprint(authAccount.Name))
 	t.AssertContains(fmt.Sprint(authAccount.Email))
 	t.AssertContains(fmt.Sprint(authAccount.Sex))
+	t.AssertContains(fmt.Sprint(authAccount.Level))
 	t.AssertContains(fmt.Sprint(authAccount.Description))
 }
 
@@ -128,23 +133,25 @@ func (t AuthAccountsTest) TestUpdate() {
 	v.Set("_method", "PUT")
 	v.Set("authAccount.ID", strconv.FormatInt(ruleId, 10))
 
-	v.Set("authAccount.ManagerID", "3462173741599304634")
+	v.Set("authAccount.ManagerID", "8926784292683190424")
 
-	v.Set("authAccount.LeaderID", "1950870360769185624")
+	v.Set("authAccount.LeaderID", "6993474453274462803")
 
-	v.Set("authAccount.Name", "0gw")
+	v.Set("authAccount.Name", "s56")
 
-	v.Set("authAccount.Password", "6up7g1ldl")
+	v.Set("authAccount.Password", "egiwp4wxk")
 
-	v.Set("authAccount.Email", "Quos qui quibusdam quae aut et sed.")
+	v.Set("authAccount.Email", "Qui quia voluptas.")
 
-	v.Set("authAccount.Sex", "Iure harum repudiandae.")
+	v.Set("authAccount.Sex", "Ut ut voluptas.")
 
-	v.Set("authAccount.Description", "Quia debitis eos consequatur iusto soluta non neque.")
+	v.Set("authAccount.Level", "Nemo commodi aperiam.")
 
-	v.Set("authAccount.CreatedAt", "1982-09-24T19:59:27+08:00")
+	v.Set("authAccount.Description", "Facilis eius molestiae et.")
 
-	v.Set("authAccount.UpdatedAt", "2007-01-29T05:14:23+08:00")
+	v.Set("authAccount.CreatedAt", "1993-07-11T17:56:12+08:00")
+
+	v.Set("authAccount.UpdatedAt", "1996-04-24T13:31:34+08:00")
 
 	t.Post(t.ReverseUrl("AuthAccounts.Update"), "application/x-www-form-urlencoded", strings.NewReader(v.Encode()))
 	t.AssertOk()
@@ -166,6 +173,8 @@ func (t AuthAccountsTest) TestUpdate() {
 	t.AssertEqual(fmt.Sprint(authAccount.Email), v.Get("authAccount.Email"))
 
 	t.AssertEqual(fmt.Sprint(authAccount.Sex), v.Get("authAccount.Sex"))
+
+	t.AssertEqual(fmt.Sprint(authAccount.Level), v.Get("authAccount.Level"))
 
 	t.AssertEqual(fmt.Sprint(authAccount.Description), v.Get("authAccount.Description"))
 
