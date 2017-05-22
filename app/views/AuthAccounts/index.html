@@ -30,7 +30,8 @@
       <tbody>
       {{- range $idx, $v := .authAccounts}}
         <tr x-record-key="{{$v.ID}}">
-            <td><input type="checkbox" class="auth_accounts-row-checker" key="{{$v.ID}}" url="{{url "AuthAccounts.Edit" $v.ID}}"/></td>{{- if $.authAccounts}}
+            <td><input type="checkbox" class="auth_accounts-row-checker" key="{{$v.ID}}" url="{{url "AuthAccounts.Edit" $v.ID}}"/></td>
+            {{- if $.authAccountByID }}
               {{- $rValue := index $.authAccountByID $v.ManagerID}}
               <td>
               {{- if $rValue}}
@@ -41,7 +42,12 @@
               {{- if $rValue}}
                 {{- $rValue.ID}}
               {{- end -}}
-              </td>{{- end}}{{- if $.authAccounts}}
+              </td>
+            {{- else}}
+                <td></td>
+                <td></td>
+            {{- end}}
+            {{- if $.authAccountByID }}
               {{- $rValue := index $.authAccountByID $v.LeaderID}}
               <td>
               {{- if $rValue}}
@@ -52,7 +58,11 @@
               {{- if $rValue}}
                 {{- $rValue.ID}}
               {{- end -}}
-              </td>{{- end}}
+              </td>
+            {{- else}}
+                <td></td>
+                <td></td>
+            {{- end}}
             <td >
               {{-  $v.Name}}</td>
             <td >

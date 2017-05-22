@@ -22,8 +22,11 @@
       <tbody>
       {{- range $idx, $v := .onlineUsers}}
         <tr x-record-key="{{$v.ID}}">
-            <td><input type="checkbox" class="online_users-row-checker" key="{{$v.ID}}" url="{{url "OnlineUsers.Edit" $v.ID}}"/></td>{{- if $.authAccounts}}
-              {{- $rValue := index $.authAccountByID $v.AuthAccountID}}{{- end}}
+            <td><input type="checkbox" class="online_users-row-checker" key="{{$v.ID}}" url="{{url "OnlineUsers.Edit" $v.ID}}"/></td>
+            {{- if $.authAccountByID }}
+              {{- $rValue := index $.authAccountByID $v.AuthAccountID}}
+            {{- else}}
+            {{- end}}
             <td >
               {{-  $v.Hostaddress}}</td>
             <td >
