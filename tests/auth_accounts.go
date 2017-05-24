@@ -55,27 +55,27 @@ func (t AuthAccountsTest) TestCreate() {
 	t.ClearTable("tpt_auth_accounts")
 	v := url.Values{}
 
-	v.Set("authAccount.ManagerID", "7639537466609394841")
+	v.Set("authAccount.ManagerID", "6840940048782611668")
 
-	v.Set("authAccount.LeaderID", "5628780035462113946")
+	v.Set("authAccount.LeaderID", "6989189835559033944")
 
-	v.Set("authAccount.Name", "t46")
+	v.Set("authAccount.Name", "0mi")
 
-	v.Set("authAccount.Password", "m8u9m38si")
+	v.Set("authAccount.Password", "kr8ocivy7")
 
-	v.Set("authAccount.Email", "Rerum ullam rerum facere ut alias nobis est.")
+	v.Set("authAccount.Email", "Fugiat nobis sunt.")
 
-	v.Set("authAccount.Sex", "Voluptates perferendis corrupti sapiente aut quae harum.")
+	v.Set("authAccount.Sex", "Quos est ipsa.")
 
-	v.Set("authAccount.Level", "Eos placeat nisi cum neque temporibus voluptatibus neque.")
+	v.Set("authAccount.Level", "Recusandae possimus repudiandae consequuntur.")
 
-	v.Set("authAccount.Description", "Quasi sed nisi aut saepe eos est impedit.")
+	v.Set("authAccount.Description", "Quia labore voluptate in harum et est.")
 
 	v.Set("authAccount.Birthday", "abc")
 
-	v.Set("authAccount.CreatedAt", "1981-02-14T23:31:34+08:00")
+	v.Set("authAccount.CreatedAt", "2002-03-18T14:54:49+08:00")
 
-	v.Set("authAccount.UpdatedAt", "1991-01-21T14:17:23+08:00")
+	v.Set("authAccount.UpdatedAt", "1978-07-01T23:29:23+08:00")
 
 	t.Post(t.ReverseUrl("AuthAccounts.Create"), "application/x-www-form-urlencoded", strings.NewReader(v.Encode()))
 	t.AssertOk()
@@ -138,27 +138,27 @@ func (t AuthAccountsTest) TestUpdate() {
 	v.Set("_method", "PUT")
 	v.Set("authAccount.ID", strconv.FormatInt(ruleId, 10))
 
-	v.Set("authAccount.ManagerID", "3148472061957132038")
+	v.Set("authAccount.ManagerID", "7337924297956790715")
 
-	v.Set("authAccount.LeaderID", "5151738548693216516")
+	v.Set("authAccount.LeaderID", "5660749822729475792")
 
-	v.Set("authAccount.Name", "o90")
+	v.Set("authAccount.Name", "sqi")
 
-	v.Set("authAccount.Password", "twmdoajo4")
+	v.Set("authAccount.Password", "5muudbe48")
 
-	v.Set("authAccount.Email", "Et consectetur est nihil sunt.")
+	v.Set("authAccount.Email", "Maiores eos quisquam unde minima autem vero.")
 
-	v.Set("authAccount.Sex", "Optio excepturi rem assumenda delectus illum.")
+	v.Set("authAccount.Sex", "Numquam inventore quaerat numquam iste aliquam.")
 
-	v.Set("authAccount.Level", "Voluptas quasi quas ipsa.")
+	v.Set("authAccount.Level", "Eligendi voluptatem atque debitis facere.")
 
-	v.Set("authAccount.Description", "Ex enim et et cupiditate pariatur blanditiis.")
+	v.Set("authAccount.Description", "Sint laborum delectus voluptatem ullam consectetur totam id.")
 
 	v.Set("authAccount.Birthday", "abc")
 
-	v.Set("authAccount.CreatedAt", "1995-05-07T13:44:42+08:00")
+	v.Set("authAccount.CreatedAt", "1995-12-21T11:13:08+08:00")
 
-	v.Set("authAccount.UpdatedAt", "1993-06-15T17:27:30+08:00")
+	v.Set("authAccount.UpdatedAt", "1981-02-05T08:03:18+08:00")
 
 	t.Post(t.ReverseUrl("AuthAccounts.Update"), "application/x-www-form-urlencoded", strings.NewReader(v.Encode()))
 	t.AssertOk()

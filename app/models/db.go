@@ -23,6 +23,15 @@ func (db *DB) AuthAccounts() *orm.Collection {
 	})(db.Engine)
 }
 
+func DropTables(engine *xorm.Engine) error {
+	beans := []interface{}{
+		&OnlineUser{},
+		&AuthAccount{},
+	}
+
+	return engine.DropTables(beans...)
+}
+
 func InitTables(engine *xorm.Engine) error {
 	beans := []interface{}{
 		&OnlineUser{},
