@@ -16,6 +16,7 @@ type AuthAccount struct {
 	Sex         string    `json:"sex" xorm:"sex notnull"`
 	Level       string    `json:"level" xorm:"level notnull"`
 	Description string    `json:"description,omitempty" xorm:"description"`
+	Birthday    time.Time `json:"birthday,omitempty" xorm:"birthday"`
 	CreatedAt   time.Time `json:"created_at,omitempty" xorm:"created_at created"`
 	UpdatedAt   time.Time `json:"updated_at,omitempty" xorm:"updated_at updated"`
 }
@@ -57,6 +58,8 @@ func KeyForAuthAccounts(key string) string {
 		return "authAccount.Level"
 	case "description":
 		return "authAccount.Description"
+	case "birthday":
+		return "authAccount.Birthday"
 	case "created_at":
 		return "authAccount.CreatedAt"
 	case "updated_at":

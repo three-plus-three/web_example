@@ -2,13 +2,14 @@
   pk:
     id: 'PK_GENERATE(auth_account_key)'
   fields:
-    manager_id: 4412107119380008477
-    leader_id: 7825643493257427268
-    name: mpy
-    password: 3fq4a1jg6
-    email: Vel unde odit.
-    sex: Qui in adipisci repellat.
-    level: Accusantium dicta repudiandae.
-    description: Quos reprehenderit facere.
-    created_at: 1999-04-07T16:59:17+08:00
-    updated_at: 2001-12-03T11:34:29+08:00
+    manager_id: 8962728995435358167
+    leader_id: 4621141502824438823
+    name: 6gf
+    password: tokl9v1qi
+    email: Deserunt eum nihil.
+    sex: Quisquam ipsum sint quis ex mollitia a possimus.
+    level: Consequatur dolorem omnis.
+    description: Voluptas quidem quas asperiores minima.
+    birthday: abc
+    created_at: 1983-06-22T15:35:26+08:00
+    updated_at: 1978-12-07T09:09:29+08:00

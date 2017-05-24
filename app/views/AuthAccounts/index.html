@@ -20,6 +20,7 @@
         {{table_column_title . "sex" "性别"}}
         {{table_column_title . "level" "级别"}}
         {{table_column_title . "description" "描述"}}
+        {{table_column_title . "birthday" "生日"}}
         {{table_column_title . "created_at" "创建时间"}}
         {{table_column_title . "updated_at" "修改时间"}}
         {{- if current_user_has_write_permission $raw "auth_accounts"}}
@@ -44,8 +45,8 @@
               {{- end -}}
               </td>
             {{- else}}
-                <td></td>
-                <td></td>
+              <td></td>
+              <td></td>
             {{- end}}
             {{- if $.authAccountByID }}
               {{- $rValue := index $.authAccountByID $v.LeaderID}}
@@ -60,8 +61,8 @@
               {{- end -}}
               </td>
             {{- else}}
-                <td></td>
-                <td></td>
+              <td></td>
+              <td></td>
             {{- end}}
             <td >
               {{-  $v.Name}}</td>
@@ -73,6 +74,8 @@
               {{- userLevel_format $v.Level}}</td>
             <td >
               {{-  $v.Description}}</td>
+            <td >
+              {{- date $v.Birthday}}</td>
             <td >
               {{- datetime $v.CreatedAt}}</td>
             <td >

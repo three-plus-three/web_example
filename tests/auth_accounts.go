@@ -41,6 +41,7 @@ func (t AuthAccountsTest) TestIndex() {
 	t.AssertContains(fmt.Sprint(authAccount.Sex))
 	t.AssertContains(fmt.Sprint(authAccount.Level))
 	t.AssertContains(fmt.Sprint(authAccount.Description))
+	t.AssertContains(fmt.Sprint(authAccount.Birthday))
 }
 
 func (t AuthAccountsTest) TestNew() {
@@ -54,25 +55,27 @@ func (t AuthAccountsTest) TestCreate() {
 	t.ClearTable("tpt_auth_accounts")
 	v := url.Values{}
 
-	v.Set("authAccount.ManagerID", "5673953820110561997")
+	v.Set("authAccount.ManagerID", "7639537466609394841")
 
-	v.Set("authAccount.LeaderID", "4115042040402795019")
+	v.Set("authAccount.LeaderID", "5628780035462113946")
 
-	v.Set("authAccount.Name", "zni")
+	v.Set("authAccount.Name", "t46")
 
-	v.Set("authAccount.Password", "3i4yy5fdr")
+	v.Set("authAccount.Password", "m8u9m38si")
 
-	v.Set("authAccount.Email", "Consequatur voluptas sunt voluptas quo sed.")
+	v.Set("authAccount.Email", "Rerum ullam rerum facere ut alias nobis est.")
 
-	v.Set("authAccount.Sex", "Et aut et aspernatur et.")
+	v.Set("authAccount.Sex", "Voluptates perferendis corrupti sapiente aut quae harum.")
 
-	v.Set("authAccount.Level", "Et recusandae dicta eum nobis autem.")
+	v.Set("authAccount.Level", "Eos placeat nisi cum neque temporibus voluptatibus neque.")
 
-	v.Set("authAccount.Description", "Neque enim nobis similique error.")
+	v.Set("authAccount.Description", "Quasi sed nisi aut saepe eos est impedit.")
 
-	v.Set("authAccount.CreatedAt", "1992-08-23T18:13:18+08:00")
+	v.Set("authAccount.Birthday", "abc")
 
-	v.Set("authAccount.UpdatedAt", "1970-10-10T07:32:42+08:00")
+	v.Set("authAccount.CreatedAt", "1981-02-14T23:31:34+08:00")
+
+	v.Set("authAccount.UpdatedAt", "1991-01-21T14:17:23+08:00")
 
 	t.Post(t.ReverseUrl("AuthAccounts.Create"), "application/x-www-form-urlencoded", strings.NewReader(v.Encode()))
 	t.AssertOk()
@@ -95,6 +98,7 @@ func (t AuthAccountsTest) TestCreate() {
 	t.AssertEqual(fmt.Sprint(authAccount.Sex), v.Get("authAccount.Sex"))
 	t.AssertEqual(fmt.Sprint(authAccount.Level), v.Get("authAccount.Level"))
 	t.AssertEqual(fmt.Sprint(authAccount.Description), v.Get("authAccount.Description"))
+	t.AssertEqual(fmt.Sprint(authAccount.Birthday), v.Get("authAccount.Birthday"))
 }
 
 func (t AuthAccountsTest) TestEdit() {
@@ -121,6 +125,7 @@ func (t AuthAccountsTest) TestEdit() {
 	t.AssertContains(fmt.Sprint(authAccount.Sex))
 	t.AssertContains(fmt.Sprint(authAccount.Level))
 	t.AssertContains(fmt.Sprint(authAccount.Description))
+	t.AssertContains(fmt.Sprint(authAccount.Birthday))
 }
 
 func (t AuthAccountsTest) TestUpdate() {
@@ -133,25 +138,27 @@ func (t AuthAccountsTest) TestUpdate() {
 	v.Set("_method", "PUT")
 	v.Set("authAccount.ID", strconv.FormatInt(ruleId, 10))
 
-	v.Set("authAccount.ManagerID", "8613502590859630358")
+	v.Set("authAccount.ManagerID", "3148472061957132038")
 
-	v.Set("authAccount.LeaderID", "2765925703865837682")
+	v.Set("authAccount.LeaderID", "5151738548693216516")
 
-	v.Set("authAccount.Name", "zh9")
+	v.Set("authAccount.Name", "o90")
 
-	v.Set("authAccount.Password", "5nr2y2buu")
+	v.Set("authAccount.Password", "twmdoajo4")
 
-	v.Set("authAccount.Email", "Maiores accusantium at autem aut quae cumque quam.")
+	v.Set("authAccount.Email", "Et consectetur est nihil sunt.")
 
-	v.Set("authAccount.Sex", "Molestiae nam soluta a nobis.")
+	v.Set("authAccount.Sex", "Optio excepturi rem assumenda delectus illum.")
 
-	v.Set("authAccount.Level", "Dolorum omnis necessitatibus quia iste consequuntur.")
+	v.Set("authAccount.Level", "Voluptas quasi quas ipsa.")
 
-	v.Set("authAccount.Description", "Autem consequuntur earum itaque eveniet eveniet.")
+	v.Set("authAccount.Description", "Ex enim et et cupiditate pariatur blanditiis.")
 
-	v.Set("authAccount.CreatedAt", "2015-05-24T23:43:34+08:00")
+	v.Set("authAccount.Birthday", "abc")
 
-	v.Set("authAccount.UpdatedAt", "2010-04-11T04:58:53+08:00")
+	v.Set("authAccount.CreatedAt", "1995-05-07T13:44:42+08:00")
+
+	v.Set("authAccount.UpdatedAt", "1993-06-15T17:27:30+08:00")
 
 	t.Post(t.ReverseUrl("AuthAccounts.Update"), "application/x-www-form-urlencoded", strings.NewReader(v.Encode()))
 	t.AssertOk()
@@ -177,6 +184,8 @@ func (t AuthAccountsTest) TestUpdate() {
 	t.AssertEqual(fmt.Sprint(authAccount.Level), v.Get("authAccount.Level"))
 
 	t.AssertEqual(fmt.Sprint(authAccount.Description), v.Get("authAccount.Description"))
+
+	t.AssertEqual(fmt.Sprint(authAccount.Birthday), v.Get("authAccount.Birthday"))
 
 }
 

@@ -75,6 +75,11 @@ fields:
   type: string
   restrictions:
     maxlength: 2000
+- name: birthday
+  description: 生日
+  label: 生日
+  type: date
+  readonly: true
 - name: created_at
   description: 创建时间
   label: 创建时间
