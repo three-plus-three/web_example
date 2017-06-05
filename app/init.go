@@ -17,9 +17,9 @@ var Lifecycle *libs.Lifecycle
 func init() {
 	web_ext.Init("web_example", "例子", "",
 		func(data *web_ext.Lifecycle) error {
-			if err := models.DropTables(data.ModelEngine); err != nil {
-				return err
-			}
+			//if err := models.DropTables(data.ModelEngine); err != nil {
+			//	return err
+			//}
 			if err := models.InitTables(data.ModelEngine); err != nil {
 				return err
 			}

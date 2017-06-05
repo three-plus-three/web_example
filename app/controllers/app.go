@@ -23,7 +23,7 @@ type App struct {
 }
 
 func (c *App) CurrentUser() web_ext.User {
-	return c.Lifecycle.CurrentUser()
+	return c.Lifecycle.CurrentUser(c.Controller)
 }
 
 func (c *App) initLifecycle() revel.Result {
