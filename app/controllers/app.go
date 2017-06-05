@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/three-plus-three/modules/web_ext"
 	"github.com/three-plus-three/web_example/app"
 	"github.com/three-plus-three/web_example/app/libs"
 
@@ -19,6 +20,10 @@ import (
 type App struct {
 	*revel.Controller
 	Lifecycle *libs.Lifecycle
+}
+
+func (c *App) CurrentUser() web_ext.User {
+	return c.Lifecycle.CurrentUser()
 }
 
 func (c *App) initLifecycle() revel.Result {
