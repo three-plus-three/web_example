@@ -17,19 +17,15 @@ func (c *App) CurrentUser() web_ext.User {
 	return c.Lifecycle.CurrentUser(c.Controller)
 }
 
-func (c *App) initLifecycle() revel.Result {
+func (c *App) init() revel.Result {
 	c.Lifecycle = app.Lifecycle
 	c.ViewArgs["menuList"] = c.Lifecycle.MenuList
+	c.ViewArgs["controller"] = c.Name
 	user := c.CurrentUser()
 	if user != nil {
 		c.ViewArgs["currentUsername"] = user.Name()
 		c.ViewArgs["currentUser"] = user
 	}
-	return nil
-}
-
-func (c App) beforeInvoke() revel.Result {
-	c.ViewArgs["controller"] = c.Name
 	return nil
 }
 
@@ -42,7 +38,7 @@ func (c *App) IsAjax() bool {
 // }
 
 func init() {
-	revel.InterceptMethod((*App).initLifecycle, revel.BEFORE)
+	revel.InterceptMethod((*App).init, revel.BEFORE)
 	revel.InterceptMethod(func(c interface{}) revel.Result {
 		if check, ok := c.(interface {
 			CheckUser() revel.Result
@@ -51,6 +47,4 @@ func init() {
 		}
 		return nil
 	}, revel.BEFORE)
-
-	revel.InterceptMethod((App).beforeInvoke, revel.BEFORE)
 }
