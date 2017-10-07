@@ -29,7 +29,7 @@ func (c *App) init() revel.Result {
 	return nil
 }
 
-func (c *App) IsAjax() bool {
+func (c *App) IsAJAX() bool {
 	return c.Request.Header.Get("X-Requested-With") == "XMLHttpRequest"
 }
 
@@ -39,12 +39,12 @@ func (c *App) IsAjax() bool {
 
 func init() {
 	revel.InterceptMethod((*App).init, revel.BEFORE)
-	revel.InterceptMethod(func(c interface{}) revel.Result {
-		if check, ok := c.(interface {
-			CheckUser() revel.Result
+	revel.InterceptFunc(func(c *revel.Controller) revel.Result {
+		if check, ok := c.AppController.(interface {
+			checkUser() revel.Result
 		}); ok {
-			return check.CheckUser()
+			return check.checkUser()
 		}
 		return nil
-	}, revel.BEFORE)
+	}, revel.BEFORE, revel.AllControllers)
 }
