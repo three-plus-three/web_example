@@ -19,7 +19,7 @@ func (c *App) CurrentUser() web_ext.User {
 
 func (c *App) init() revel.Result {
 	c.Lifecycle = app.Lifecycle
-	c.ViewArgs["menuList"] = c.Lifecycle.MenuList
+	c.ViewArgs["menuList"] = c.Lifecycle.Menus()
 	c.ViewArgs["controller"] = c.Name
 	user := c.CurrentUser()
 	if user != nil {
