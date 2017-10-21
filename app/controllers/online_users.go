@@ -9,7 +9,6 @@ import (
 	"github.com/revel/revel"
 	"github.com/runner-mei/orm"
 	"github.com/three-plus-three/forms"
-	"github.com/three-plus-three/modules/toolbox"
 )
 
 func init() {
@@ -35,18 +34,13 @@ func (c OnlineUsers) Index() revel.Result {
 		return c.Render(err)
 	}
 
-	var pageIndex, pageSize int
-	c.Params.Bind(&pageIndex, "pageIndex")
-	c.Params.Bind(&pageSize, "pageSize")
-	if pageSize <= 0 {
-		pageSize = toolbox.DEFAULT_SIZE_PER_PAGE
-	}
+	var page = c.Pagination()
 
 	var onlineUsers []models.OnlineUser
 	err = c.Lifecycle.DB.OnlineUsers().Where().
 		And(cond).
-		Offset(pageIndex * pageSize).
-		Limit(pageSize).
+		Offset(page.Offset()).
+		Limit(page.Limit()).
 		All(&onlineUsers)
 	if err != nil {
 		c.Validation.Error(err.Error())
@@ -76,7 +70,7 @@ func (c OnlineUsers) Index() revel.Result {
 		}
 	}
 
-	paginator := toolbox.NewPaginator(c.Request.Request, pageSize, total)
+	paginator := page.New(total)
 	return c.Render(onlineUsers, paginator)
 }
 

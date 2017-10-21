@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"github.com/three-plus-three/modules/toolbox"
 	"github.com/three-plus-three/modules/web_ext"
 	"github.com/three-plus-three/web_example/app"
 	"github.com/three-plus-three/web_example/app/libs"
@@ -31,6 +32,34 @@ func (c *App) init() revel.Result {
 
 func (c *App) IsAJAX() bool {
 	return c.Request.Header.Get("X-Requested-With") == "XMLHttpRequest"
+}
+
+type Pagination struct {
+	c           *revel.Controller
+	index, size int
+}
+
+func (p Pagination) Offset() int {
+	return p.index * p.size
+}
+
+func (p Pagination) Limit() int {
+	return p.size
+}
+
+func (p Pagination) Get(nums interface{}) *toolbox.Paginator {
+	return toolbox.NewPaginator(p.c.Request.Request, p.size, nums)
+}
+
+func (c *App) Pagination() Pagination {
+	var pageIndex, pageSize int
+	c.Params.Bind(&pageIndex, "pageIndex")
+	c.Params.Bind(&pageSize, "pageSize")
+	if pageSize <= 0 {
+		pageSize = toolbox.DEFAULT_SIZE_PER_PAGE
+	}
+
+	return Pagination{c: c.Controller, index: pageIndex, size: pageSize}
 }
 
 // func (c *ApplicationController) checkUser() revel.Result {
