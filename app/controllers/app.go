@@ -34,21 +34,25 @@ func (c *App) IsAJAX() bool {
 	return c.Request.Header.Get("X-Requested-With") == "XMLHttpRequest"
 }
 
+// Pagination 分页参数
 type Pagination struct {
 	c           *revel.Controller
-	index, size int
+	Index, Size int
 }
 
+// Offset 偏移值
 func (p Pagination) Offset() int {
-	return p.index * p.size
+	return p.Index * p.Size
 }
 
+// Limit 限制值
 func (p Pagination) Limit() int {
-	return p.size
+	return p.Size
 }
 
+// Get 获取分页对象
 func (p Pagination) Get(nums interface{}) *toolbox.Paginator {
-	return toolbox.NewPaginator(p.c.Request.Request, p.size, nums)
+	return toolbox.NewPaginator(p.c.Request.Request, p.Size, nums)
 }
 
 func (c *App) Pagination() Pagination {
@@ -59,7 +63,7 @@ func (c *App) Pagination() Pagination {
 		pageSize = toolbox.DEFAULT_SIZE_PER_PAGE
 	}
 
-	return Pagination{c: c.Controller, index: pageIndex, size: pageSize}
+	return Pagination{c: c.Controller, Index: pageIndex, Size: pageSize}
 }
 
 // func (c *ApplicationController) checkUser() revel.Result {
