@@ -14,9 +14,13 @@ type App struct {
 	Lifecycle *libs.Lifecycle
 }
 
-func (c *App) ErrorToFlash(err error) {
+func (c *App) ErrorToFlash(err error, notFoundKey ...string) {
 	if err == orm.ErrNotFound {
-		c.Flash.Error(revel.Message(c.Request.Locale, "update.record_not_found"))
+		if len(notFoundKey) >= 1 && notFoundKey[0] != "" {
+			c.Flash.Error(revel.Message(c.Request.Locale, notFoundKey[0]))
+		} else {
+			c.Flash.Error(revel.Message(c.Request.Locale, "update.record_not_found"))
+		}
 	} else {
 		if oerr, ok := err.(*orm.Error); ok {
 			for _, validation := range oerr.Validations {
