@@ -14,6 +14,21 @@ type App struct {
 	Lifecycle *libs.Lifecycle
 }
 
+func (c *App) ErrorToFlash(err error) {
+	if err == orm.ErrNotFound {
+		c.Flash.Error(revel.Message(c.Request.Locale, "update.record_not_found"))
+	} else {
+		if oerr, ok := err.(*orm.Error); ok {
+			for _, validation := range oerr.Validations {
+				c.Validation.Error(validation.Message).
+					Key(validation.Key)
+			}
+			c.Validation.Keep()
+		}
+		c.Flash.Error(err.Error())
+	}
+}
+
 func (c *App) CurrentUser() web_ext.User {
 	return c.Lifecycle.CurrentUser(c.Controller)
 }
