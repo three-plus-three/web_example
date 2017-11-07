@@ -34,7 +34,7 @@ func (c OnlineUsers) Index() revel.Result {
 		return c.Render(err)
 	}
 
-	var page = c.Pagination()
+	var page = c.pagingParams()
 
 	var onlineUsers []models.OnlineUser
 	err = c.Lifecycle.DB.OnlineUsers().Where().
@@ -70,7 +70,7 @@ func (c OnlineUsers) Index() revel.Result {
 		}
 	}
 
-	paginator := page.New(total)
+	paginator := page.Get(total)
 	return c.Render(onlineUsers, paginator)
 }
 
