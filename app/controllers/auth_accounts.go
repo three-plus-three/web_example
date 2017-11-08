@@ -145,7 +145,6 @@ func (c AuthAccounts) withAuthAccounts() ([]models.AuthAccount, error) {
 // New 编辑新建记录
 func (c AuthAccounts) New() revel.Result {
 	c.withAuthAccounts()
-
 	return c.Render()
 }
 

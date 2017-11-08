@@ -17,7 +17,7 @@ type App struct {
 
 func (c *App) ErrorToFlash(err error, notFoundKey ...string) {
 	if err == orm.ErrNotFound {
-		if len(notFoundKey) > 1 && notFoundKey[0] != "" {
+		if len(notFoundKey) >= 1 && notFoundKey[0] != "" {
 			c.Flash.Error(revel.Message(c.Request.Locale, notFoundKey[0]))
 		} else {
 			c.Flash.Error(revel.Message(c.Request.Locale, "update.record_not_found"))
@@ -54,28 +54,28 @@ func (c *App) IsAJAX() bool {
 	return c.Request.Header.Get("X-Requested-With") == "XMLHttpRequest"
 }
 
-// Pagination 分页参数
-type Pagination struct {
+// PagingParams 分页参数
+type PagingParams struct {
 	c           *revel.Controller
 	Index, Size int
 }
 
 // Offset 偏移值
-func (p Pagination) Offset() int {
+func (p PagingParams) Offset() int {
 	return p.Index * p.Size
 }
 
 // Limit 限制值
-func (p Pagination) Limit() int {
+func (p PagingParams) Limit() int {
 	return p.Size
 }
 
 // Get 获取分页对象
-func (p Pagination) Get(nums interface{}) *toolbox.Paginator {
+func (p PagingParams) Get(nums interface{}) *toolbox.Paginator {
 	return toolbox.NewPaginator(p.c.Request.Request, p.Size, nums)
 }
 
-func (c *App) PagingParams() Pagination {
+func (c *App) PagingParams() PagingParams {
 	var pageIndex, pageSize int
 	c.Params.Bind(&pageIndex, "pageIndex")
 	c.Params.Bind(&pageSize, "pageSize")
@@ -83,7 +83,7 @@ func (c *App) PagingParams() Pagination {
 		pageSize = toolbox.DEFAULT_SIZE_PER_PAGE
 	}
 
-	return Pagination{c: c.Controller, Index: pageIndex, Size: pageSize}
+	return PagingParams{c: c.Controller, Index: pageIndex, Size: pageSize}
 }
 
 // func (c *ApplicationController) checkUser() revel.Result {

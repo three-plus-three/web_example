@@ -110,7 +110,6 @@ func (c OnlineUsers) withAuthAccounts() ([]models.AuthAccount, error) {
 // New 编辑新建记录
 func (c OnlineUsers) New() revel.Result {
 	c.withAuthAccounts()
-
 	return c.Render()
 }
 
