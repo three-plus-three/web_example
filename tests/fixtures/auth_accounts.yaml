@@ -2,14 +2,14 @@
   pk:
     id: 'PK_GENERATE(auth_account_key)'
   fields:
-    manager_id: 3356784094872237258
-    leader_id: 4388454295657945220
-    name: 2xj
-    password: 61l65gnu1
-    email: Eligendi perspiciatis et reiciendis eaque quia doloribus.
-    sex: Accusantium est id alias dolore.
-    level: Dolores repudiandae tempora culpa sed sint qui vitae.
-    description: Ut impedit earum et repellendus est consequatur magnam.
+    manager_id: 3675169323257887010
+    leader_id: 7059076083253923358
+    name: cll
+    password: 48cbad505
+    email: Accusantium voluptas aut sed quia iure laudantium.
+    sex: Ullam aut neque voluptas sed.
+    level: Quod animi tempore quae.
+    description: Adipisci quasi deleniti vel error sint.
     birthday: abc
-    created_at: 2010-11-20T23:29:52+08:00
-    updated_at: 1984-01-07T00:41:13+08:00
+    created_at: 1971-04-04T17:47:17+08:00
+    updated_at: 2014-11-27T18:28:17+08:00

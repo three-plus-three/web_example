@@ -10,7 +10,7 @@ type OnlineUser struct {
 	ID            int64     `json:"id" xorm:"id pk autoincr"`
 	AuthAccountID int64     `json:"auth_account_id" xorm:"auth_account_id notnull"`
 	Hostaddress   string    `json:"hostaddress,omitempty" xorm:"hostaddress"`
-	Macaddress    string    `json:"macaddress,omitempty" xorm:"macaddress"`
+	Macaddress    string    `json:"macaddress,omitempty" xorm:"macaddress varchar(200)"`
 	CreatedAt     time.Time `json:"created_at,omitempty" xorm:"created_at created"`
 }
 

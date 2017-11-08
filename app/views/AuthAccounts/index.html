@@ -1,12 +1,12 @@
 {{$raw := .}}{{set . "title" "用户管理"}}
-{{if eq .RunMode "dev"}}
-{{append . "moreScripts" "/public/js/plugins/bootbox/bootbox.js"}}
-{{else}}
-{{append . "moreScripts" "/public/js/plugins/bootbox/bootbox.min.js"}}
-{{end}}
-{{append . "moreScripts" "/self/public/js/auth_accounts/auth_accounts.js"}}
-{{template "header_box.html" .}}
-    {{template "AuthAccounts/quick-bar.html" .}}
+{{- if eq .RunMode "dev"}}
+{{- append . "moreScripts" "/public/js/plugins/bootbox/bootbox.js"}}
+{{- else}}
+{{- append . "moreScripts" "/public/js/plugins/bootbox/bootbox.min.js"}}
+{{- end}}
+{{- append . "moreScripts" "/self/public/js/auth_accounts/auth_accounts.js"}}
+{{- template "header_box.html" .}}
+    {{- template "AuthAccounts/quick-bar.html" .}}
     <table id="AuthAccountTable" class="table table-bordered table-striped table-highlight ">
       <thead>
       <tr><th><input type="checkbox" id="auth_accounts-all-checker" /></th>
@@ -28,42 +28,13 @@
         {{- end}}
       </tr>
       </thead>
-      <tbody>
-      {{- range $idx, $v := .authAccounts}}
+      <tbody>{{- range $idx, $instance := .authAccounts}}{{$v := $instance.authaccount}}
         <tr x-record-key="{{$v.ID}}">
             <td><input type="checkbox" class="auth_accounts-row-checker" key="{{$v.ID}}" url="{{url "AuthAccounts.Edit" $v.ID}}"/></td>
-            {{- if $.authAccountByID }}
-              {{- $rValue := index $.authAccountByID $v.ManagerID}}
-              <td>
-              {{- if $rValue}}
-                {{- $rValue.Name}}
-              {{- end -}}
-              </td>
-              <td>
-              {{- if $rValue}}
-                {{- $rValue.ID}}
-              {{- end -}}
-              </td>
-            {{- else}}
-              <td></td>
-              <td></td>
-            {{- end}}
-            {{- if $.authAccountByID }}
-              {{- $rValue := index $.authAccountByID $v.LeaderID}}
-              <td>
-              {{- if $rValue}}
-                {{- $rValue.Name}}
-              {{- end -}}
-              </td>
-              <td>
-              {{- if $rValue}}
-                {{- $rValue.ID}}
-              {{- end -}}
-              </td>
-            {{- else}}
-              <td></td>
-              <td></td>
-            {{- end}}
+              <td>{{$instance.authAccount.Name}}</td>
+              <td>{{$instance.authAccount.ID}}</td>
+              <td>{{$instance.authAccount.Name}}</td>
+              <td>{{$instance.authAccount.ID}}</td>
             <td >
               {{-  $v.Name}}</td>
             <td >
@@ -98,7 +69,7 @@
           {{- end}}
         </tr>
       {{- end}}
-      <tbody>
+      </tbody>
     </table>
-    {{template "paginator.html" .}}
-{{template "footer_box.html" .}}
+    {{- template "paginator.html" .}}
+{{- template "footer_box.html" .}}

@@ -1,10 +1,10 @@
-{{set . "title" "编辑用户"}}
-{{append . "moreScripts" "/self/public/js/auth_accounts/auth_accounts.js"}}
-{{template "header_box.html" .}}
-        <form action="{{url "AuthAccounts.Update" }}" method="POST" class="form-horizontal" id="auth_accounts-edit">
+{{- set . "title" "编辑用户"}}
+{{- append . "moreScripts" "/self/public/js/auth_accounts/auth_accounts.js"}}
+{{- template "header_box.html" .}}
+    <form action="{{url "AuthAccounts.Update" .authAccount.ID}}" method="POST" class="form-horizontal" id="form-auth_accounts-edit">
         <input type="hidden" name="_method" value="PUT">
         {{hidden_field . "authAccount.ID" | render}}
-        {{- $inEditMode := .inEditMode}}{{ set . "inEditMode" false}}
+        {{- $inEditMode := .inEditMode}}{{ set . "inEditMode" true}}
         {{template "AuthAccounts/edit_fields.html" .}}
         {{- set . "inEditMode" $inEditMode}}
         <div class="form-group">
@@ -13,5 +13,5 @@
                 <a href="{{url "AuthAccounts.Index" }}" class="btn btn-info controls">取消</a>
             </div>
         </div>
-        </form>
-{{template "footer_box.html" .}}
+    </form>
+{{- template "footer_box.html" .}}

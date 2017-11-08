@@ -43,11 +43,11 @@ func (t *BaseTest) After() {
 }
 
 func (t *BaseTest) DB() *sql.DB {
-	return app.Lifecycle.DB.Engine.DB().DB
+	return app.Lifecycle.ModelEngine.DB().DB
 }
 
 func (t *BaseTest) DataDB() *sql.DB {
-	return app.Lifecycle.DataDB.Engine.DB().DB
+	return app.Lifecycle.DataEngine.DB().DB
 }
 
 func (t *BaseTest) DBRunable() squirrel.Runner {

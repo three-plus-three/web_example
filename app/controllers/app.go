@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"github.com/runner-mei/orm"
 	"github.com/three-plus-three/modules/toolbox"
 	"github.com/three-plus-three/modules/web_ext"
 	"github.com/three-plus-three/web_example/app"
@@ -12,6 +13,25 @@ import (
 type App struct {
 	*revel.Controller
 	Lifecycle *libs.Lifecycle
+}
+
+func (c *App) ErrorToFlash(err error, notFoundKey ...string) {
+	if err == orm.ErrNotFound {
+		if len(notFoundKey) > 1 && notFoundKey[0] != "" {
+			c.Flash.Error(revel.Message(c.Request.Locale, notFoundKey[0]))
+		} else {
+			c.Flash.Error(revel.Message(c.Request.Locale, "update.record_not_found"))
+		}
+	} else {
+		if oerr, ok := err.(*orm.Error); ok {
+			for _, validation := range oerr.Validations {
+				c.Validation.Error(validation.Message).
+					Key(validation.Key)
+			}
+			c.Validation.Keep()
+		}
+		c.Flash.Error(err.Error())
+	}
 }
 
 func (c *App) CurrentUser() web_ext.User {
@@ -55,7 +75,7 @@ func (p Pagination) Get(nums interface{}) *toolbox.Paginator {
 	return toolbox.NewPaginator(p.c.Request.Request, p.Size, nums)
 }
 
-func (c *App) Pagination() Pagination {
+func (c *App) PagingParams() Pagination {
 	var pageIndex, pageSize int
 	c.Params.Bind(&pageIndex, "pageIndex")
 	c.Params.Bind(&pageSize, "pageSize")

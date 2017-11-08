@@ -1,9 +1,8 @@
-{{set . "title" "新建OnlineUser"}}
-{{append . "moreStyles" "/public/css/form.css"}}
-{{append . "moreScripts" "/self/public/js/online_users/online_users.js"}}
-{{template "header_box.html" .}}
-        <form action="{{url "OnlineUsers.Create" }}" method="POST" class="form-horizontal" id="online_users-insert">
-        {{- $inEditMode := .inEditMode}}{{ set . "inEditMode" true}}
+{{- set . "title" "新建OnlineUser"}}
+{{- append . "moreScripts" "/self/public/js/online_users/online_users.js"}}
+{{- template "header_box.html" .}}
+    <form action="{{url "OnlineUsers.Create" }}" method="POST" class="form-horizontal" id="form-online_users-new">
+        {{- $inEditMode := .inEditMode}}{{ set . "inEditMode" false}}
         {{template "OnlineUsers/edit_fields.html" .}}
         {{- set . "inEditMode" $inEditMode}}
         <div class="form-group">
@@ -12,5 +11,5 @@
                 <a href="{{url "OnlineUsers.Index" }}" class="btn btn-info controls">取消</a>
             </div>
         </div>
-        </form>
-{{template "footer_box.html" .}}
+    </form>
+{{- template "footer_box.html" .}}

@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"strconv"
 
 	"github.com/three-plus-three/web_example/app/models"
@@ -9,10 +10,10 @@ import (
 	"github.com/revel/revel"
 	"github.com/runner-mei/orm"
 	"github.com/three-plus-three/forms"
-	"github.com/three-plus-three/modules/toolbox"
 )
 
 func init() {
+
 	revel.TemplateFuncs["sex_format"] = func(value string) string {
 		switch value {
 		case "male":
@@ -32,11 +33,13 @@ type AuthAccounts struct {
 
 // Index 列出所有记录
 func (c AuthAccounts) Index() revel.Result {
+	var page = c.PagingParams()
+
 	var cond orm.Cond
-	var name string
-	c.Params.Bind(&name, "query")
-	if name != "" {
-		cond = orm.Cond{"name LIKE": "%" + name + "%"}
+	var query string
+	c.Params.Bind(&query, "query")
+	if query != "" {
+		cond = orm.Cond{"name LIKE": "%" + query + "%"}
 	}
 
 	total, err := c.Lifecycle.DB.AuthAccounts().Where().And(cond).Count()
@@ -45,22 +48,22 @@ func (c AuthAccounts) Index() revel.Result {
 		return c.Render(err)
 	}
 
-	var pageIndex, pageSize int
-	c.Params.Bind(&pageIndex, "pageIndex")
-	c.Params.Bind(&pageSize, "pageSize")
-	if pageSize <= 0 {
-		pageSize = toolbox.DEFAULT_SIZE_PER_PAGE
-	}
-
 	var authAccounts []models.AuthAccount
 	err = c.Lifecycle.DB.AuthAccounts().Where().
 		And(cond).
-		Offset(pageIndex * pageSize).
-		Limit(pageSize).
+		Offset(page.Offset()).
+		Limit(page.Limit()).
 		All(&authAccounts)
 	if err != nil {
 		c.Validation.Error(err.Error())
 		return c.Render()
+	}
+
+	var authaccountList = make([]map[string]interface{}, 0, len(authAccounts))
+	for idx := range authAccounts {
+		authaccountList = append(authaccountList, map[string]interface{}{
+			"authaccount": authAccounts[idx],
+		})
 	}
 
 	if len(authAccounts) > 0 {
@@ -68,7 +71,6 @@ func (c AuthAccounts) Index() revel.Result {
 		for idx := range authAccounts {
 			authAccountIDList = append(authAccountIDList, authAccounts[idx].ManagerID)
 		}
-		var authAccountByID map[int64]models.AuthAccount
 		var authAccountList []models.AuthAccount
 		err = c.Lifecycle.DB.AuthAccounts().Where().
 			And(orm.Cond{"id IN": authAccountIDList}).
@@ -76,13 +78,14 @@ func (c AuthAccounts) Index() revel.Result {
 		if err != nil {
 			c.Validation.Error("load AuthAccount fail, " + err.Error())
 		} else {
-			if authAccountByID == nil {
-				authAccountByID = make(map[int64]models.AuthAccount, len(authAccountList))
-			}
+
 			for idx := range authAccountList {
-				authAccountByID[authAccountList[idx].ID] = authAccountList[idx]
+				for vidx := range authAccounts {
+					if authAccountList[idx].ID == authAccounts[vidx].ManagerID {
+						authaccountList[vidx]["authAccount"] = authAccountList[idx]
+					}
+				}
 			}
-			c.ViewArgs["authAccountByID"] = authAccountByID
 		}
 		authAccountIDList = authAccountIDList[:0]
 		for idx := range authAccounts {
@@ -95,26 +98,25 @@ func (c AuthAccounts) Index() revel.Result {
 		if err != nil {
 			c.Validation.Error("load AuthAccount fail, " + err.Error())
 		} else {
-			if authAccountByID == nil {
-				authAccountByID = make(map[int64]models.AuthAccount, len(authAccountList))
-			}
+
 			for idx := range authAccountList {
-				authAccountByID[authAccountList[idx].ID] = authAccountList[idx]
+				for vidx := range authAccounts {
+					if authAccountList[idx].ID == authAccounts[vidx].LeaderID {
+						authaccountList[vidx]["authAccount"] = authAccountList[idx]
+					}
+				}
 			}
-			c.ViewArgs["authAccountByID"] = authAccountByID
 		}
 	}
 
-	paginator := toolbox.NewPaginator(c.Request.Request, pageSize, total)
-	return c.Render(authAccounts, paginator)
+	paginator := page.Get(total)
+	c.ViewArgs["authAccounts"] = authaccountList
+	return c.Render(paginator)
 }
 
-// New 编辑新建记录
-func (c AuthAccounts) New() revel.Result {
-	var err error
-
+func (c AuthAccounts) withAuthAccounts() ([]models.AuthAccount, error) {
 	var authAccounts []models.AuthAccount
-	err = c.Lifecycle.DB.AuthAccounts().Where().
+	err := c.Lifecycle.DB.AuthAccounts().Where().
 		All(&authAccounts)
 	if err != nil {
 		c.Validation.Error("load AuthAccount fail, " + err.Error())
@@ -122,20 +124,29 @@ func (c AuthAccounts) New() revel.Result {
 			Value: "",
 			Label: revel.Message(c.Request.Locale, "select.empty"),
 		}}
-	} else {
-		var optAuthAccounts = make([]forms.InputChoice, 0, len(authAccounts))
-		optAuthAccounts = append(optAuthAccounts, forms.InputChoice{
-			Value: "",
-			Label: revel.Message(c.Request.Locale, "select.empty"),
-		})
-		for _, o := range authAccounts {
-			optAuthAccounts = append(optAuthAccounts, forms.InputChoice{
-				Value: strconv.FormatInt(int64(o.ID), 10),
-				Label: o.Name,
-			})
-		}
-		c.ViewArgs["authAccounts"] = optAuthAccounts
+		return nil, err
 	}
+
+	var optAuthAccounts = make([]forms.InputChoice, 0, len(authAccounts))
+	optAuthAccounts = append(optAuthAccounts, forms.InputChoice{
+		Value: "",
+		Label: revel.Message(c.Request.Locale, "select.empty"),
+	})
+	for _, o := range authAccounts {
+		optAuthAccounts = append(optAuthAccounts, forms.InputChoice{
+			Value: strconv.FormatInt(int64(o.ID), 10),
+			Label: fmt.Sprint(o.Name),
+		})
+	}
+	c.ViewArgs["authAccounts"] = optAuthAccounts
+	return authAccounts, nil
+}
+
+// New 编辑新建记录
+func (c AuthAccounts) New() revel.Result {
+	c.withAuthAccounts()
+	c.withAuthAccounts()
+
 	return c.Render()
 }
 
@@ -149,13 +160,7 @@ func (c AuthAccounts) Create(authAccount *models.AuthAccount) revel.Result {
 
 	_, err := c.Lifecycle.DB.AuthAccounts().Insert(authAccount)
 	if err != nil {
-		if oerr, ok := err.(*orm.Error); ok {
-			for _, validation := range oerr.Validations {
-				c.Validation.Error(validation.Message).Key(models.KeyForAuthAccounts(validation.Key))
-			}
-			c.Validation.Keep()
-		}
-		c.Flash.Error(err.Error())
+		c.ErrorToFlash(err)
 		c.FlashParams()
 		return c.Redirect(routes.AuthAccounts.New())
 	}
@@ -167,67 +172,31 @@ func (c AuthAccounts) Create(authAccount *models.AuthAccount) revel.Result {
 // Edit 编辑指定 id 的记录
 func (c AuthAccounts) Edit(id int64) revel.Result {
 	var authAccount models.AuthAccount
-	err := c.Lifecycle.DB.AuthAccounts().Id(id).Get(&authAccount)
+	err := c.Lifecycle.DB.AuthAccounts().ID(id).Get(&authAccount)
 	if err != nil {
-		if err == orm.ErrNotFound {
-			c.Flash.Error(revel.Message(c.Request.Locale, "update.record_not_found"))
-		} else {
-			c.Flash.Error(err.Error())
-		}
+		c.ErrorToFlash(err)
 		c.FlashParams()
 		return c.Redirect(routes.AuthAccounts.Index())
 	}
 
-	var authAccounts []models.AuthAccount
-	err = c.Lifecycle.DB.AuthAccounts().Where().
-		All(&authAccounts)
-	if err != nil {
-		c.Validation.Error("load AuthAccount fail, " + err.Error())
-		c.ViewArgs["authAccounts"] = []forms.InputChoice{{
-			Value: "",
-			Label: revel.Message(c.Request.Locale, "select.empty"),
-		}}
-	} else {
-		var optAuthAccounts = make([]forms.InputChoice, 0, len(authAccounts))
-		optAuthAccounts = append(optAuthAccounts, forms.InputChoice{
-			Value: "",
-			Label: revel.Message(c.Request.Locale, "select.empty"),
-		})
-		for _, o := range authAccounts {
-			optAuthAccounts = append(optAuthAccounts, forms.InputChoice{
-				Value: strconv.FormatInt(int64(o.ID), 10),
-				Label: o.Name,
-			})
-		}
-		c.ViewArgs["authAccounts"] = optAuthAccounts
-	}
-
+	c.withAuthAccounts()
+	c.withAuthAccounts()
 	return c.Render(authAccount)
 }
 
 // Update 按 id 更新记录
-func (c AuthAccounts) Update(authAccount *models.AuthAccount) revel.Result {
+func (c AuthAccounts) Update(id int64, authAccount *models.AuthAccount) revel.Result {
 	if authAccount.Validate(c.Validation) {
 		c.Validation.Keep()
 		c.FlashParams()
-		return c.Redirect(routes.AuthAccounts.Edit(int64(authAccount.ID)))
+		return c.Redirect(routes.AuthAccounts.Edit(id))
 	}
 
-	err := c.Lifecycle.DB.AuthAccounts().Id(authAccount.ID).Update(authAccount)
+	err := c.Lifecycle.DB.AuthAccounts().ID(id).Update(authAccount)
 	if err != nil {
-		if err == orm.ErrNotFound {
-			c.Flash.Error(revel.Message(c.Request.Locale, "update.record_not_found"))
-		} else {
-			if oerr, ok := err.(*orm.Error); ok {
-				for _, validation := range oerr.Validations {
-					c.Validation.Error(validation.Message).Key(models.KeyForAuthAccounts(validation.Key))
-				}
-				c.Validation.Keep()
-			}
-			c.Flash.Error(err.Error())
-		}
+		c.ErrorToFlash(err)
 		c.FlashParams()
-		return c.Redirect(routes.AuthAccounts.Edit(int64(authAccount.ID)))
+		return c.Redirect(routes.AuthAccounts.Edit(id))
 	}
 	c.Flash.Success(revel.Message(c.Request.Locale, "update.success"))
 	return c.Redirect(routes.AuthAccounts.Index())
@@ -235,13 +204,9 @@ func (c AuthAccounts) Update(authAccount *models.AuthAccount) revel.Result {
 
 // Delete 按 id 删除记录
 func (c AuthAccounts) Delete(id int64) revel.Result {
-	err := c.Lifecycle.DB.AuthAccounts().Id(id).Delete()
+	err := c.Lifecycle.DB.AuthAccounts().ID(id).Delete()
 	if nil != err {
-		if err == orm.ErrNotFound {
-			c.Flash.Error(revel.Message(c.Request.Locale, "delete.record_not_found"))
-		} else {
-			c.Flash.Error(err.Error())
-		}
+		c.ErrorToFlash(err, "delete.record_not_found")
 	} else {
 		c.Flash.Success(revel.Message(c.Request.Locale, "delete.success"))
 	}

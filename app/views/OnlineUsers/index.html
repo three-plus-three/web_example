@@ -1,12 +1,12 @@
 {{$raw := .}}{{set . "title" "OnlineUser"}}
-{{if eq .RunMode "dev"}}
-{{append . "moreScripts" "/public/js/plugins/bootbox/bootbox.js"}}
-{{else}}
-{{append . "moreScripts" "/public/js/plugins/bootbox/bootbox.min.js"}}
-{{end}}
-{{append . "moreScripts" "/self/public/js/online_users/online_users.js"}}
-{{template "header_box.html" .}}
-    {{template "OnlineUsers/quick-bar.html" .}}
+{{- if eq .RunMode "dev"}}
+{{- append . "moreScripts" "/public/js/plugins/bootbox/bootbox.js"}}
+{{- else}}
+{{- append . "moreScripts" "/public/js/plugins/bootbox/bootbox.min.js"}}
+{{- end}}
+{{- append . "moreScripts" "/self/public/js/online_users/online_users.js"}}
+{{- template "header_box.html" .}}
+    {{- template "OnlineUsers/quick-bar.html" .}}
     <table id="OnlineUserTable" class="table table-bordered table-striped table-highlight ">
       <thead>
       <tr><th><input type="checkbox" id="online_users-all-checker" /></th>
@@ -19,14 +19,9 @@
         {{- end}}
       </tr>
       </thead>
-      <tbody>
-      {{- range $idx, $v := .onlineUsers}}
+      <tbody>{{- range $idx, $instance := .onlineUsers}}{{$v := $instance.onlineuser}}
         <tr x-record-key="{{$v.ID}}">
             <td><input type="checkbox" class="online_users-row-checker" key="{{$v.ID}}" url="{{url "OnlineUsers.Edit" $v.ID}}"/></td>
-            {{- if $.authAccountByID }}
-              {{- $rValue := index $.authAccountByID $v.AuthAccountID}}
-            {{- else}}
-            {{- end}}
             <td >
               {{-  $v.Hostaddress}}</td>
             <td >
@@ -51,7 +46,7 @@
           {{- end}}
         </tr>
       {{- end}}
-      <tbody>
+      </tbody>
     </table>
-    {{template "paginator.html" .}}
-{{template "footer_box.html" .}}
+    {{- template "paginator.html" .}}
+{{- template "footer_box.html" .}}

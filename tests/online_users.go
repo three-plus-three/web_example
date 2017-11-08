@@ -52,11 +52,11 @@ func (t OnlineUsersTest) TestCreate() {
 
 	v.Set("onlineUser.AuthAccountID", "abc")
 
-	v.Set("onlineUser.Hostaddress", "Ab nesciunt sunt nobis eveniet assumenda necessitatibus culpa.")
+	v.Set("onlineUser.Hostaddress", "Rerum sit sit omnis sed vero.")
 
-	v.Set("onlineUser.Macaddress", "Alias voluptas porro sunt est aut.")
+	v.Set("onlineUser.Macaddress", "Eum quas aut.")
 
-	v.Set("onlineUser.CreatedAt", "1988-10-31T12:42:53+08:00")
+	v.Set("onlineUser.CreatedAt", "1971-03-06T00:55:35+08:00")
 
 	t.Post(t.ReverseUrl("OnlineUsers.Create"), "application/x-www-form-urlencoded", strings.NewReader(v.Encode()))
 	t.AssertOk()
@@ -110,17 +110,17 @@ func (t OnlineUsersTest) TestUpdate() {
 
 	v.Set("onlineUser.AuthAccountID", "abc")
 
-	v.Set("onlineUser.Hostaddress", "Cumque qui sapiente cupiditate eum.")
+	v.Set("onlineUser.Hostaddress", "Dicta omnis non nam accusantium recusandae dicta laborum.")
 
-	v.Set("onlineUser.Macaddress", "Suscipit ut sint vero velit provident in quia.")
+	v.Set("onlineUser.Macaddress", "Expedita hic animi.")
 
-	v.Set("onlineUser.CreatedAt", "1979-04-11T05:09:05+08:00")
+	v.Set("onlineUser.CreatedAt", "1988-10-07T01:56:40+08:00")
 
-	t.Post(t.ReverseUrl("OnlineUsers.Update"), "application/x-www-form-urlencoded", strings.NewReader(v.Encode()))
+	t.Post(t.ReverseUrl("OnlineUsers.Update", ruleId), "application/x-www-form-urlencoded", strings.NewReader(v.Encode()))
 	t.AssertOk()
 
 	var onlineUser models.OnlineUser
-	err := app.Lifecycle.DB.OnlineUsers().Id(ruleId).Get(&onlineUser)
+	err := app.Lifecycle.DB.OnlineUsers().ID(ruleId).Get(&onlineUser)
 	if err != nil {
 		t.Assertf(false, err.Error())
 	}

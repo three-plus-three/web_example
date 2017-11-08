@@ -1,9 +1,8 @@
-{{set . "title" "新建用户"}}
-{{append . "moreStyles" "/public/css/form.css"}}
-{{append . "moreScripts" "/self/public/js/auth_accounts/auth_accounts.js"}}
-{{template "header_box.html" .}}
-        <form action="{{url "AuthAccounts.Create" }}" method="POST" class="form-horizontal" id="auth_accounts-insert">
-        {{- $inEditMode := .inEditMode}}{{ set . "inEditMode" true}}
+{{- set . "title" "新建用户"}}
+{{- append . "moreScripts" "/self/public/js/auth_accounts/auth_accounts.js"}}
+{{- template "header_box.html" .}}
+    <form action="{{url "AuthAccounts.Create" }}" method="POST" class="form-horizontal" id="form-auth_accounts-new">
+        {{- $inEditMode := .inEditMode}}{{ set . "inEditMode" false}}
         {{template "AuthAccounts/edit_fields.html" .}}
         {{- set . "inEditMode" $inEditMode}}
         <div class="form-group">
@@ -12,5 +11,5 @@
                 <a href="{{url "AuthAccounts.Index" }}" class="btn btn-info controls">取消</a>
             </div>
         </div>
-        </form>
-{{template "footer_box.html" .}}
+    </form>
+{{- template "footer_box.html" .}}

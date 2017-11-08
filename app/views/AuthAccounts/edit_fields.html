@@ -1,10 +1,10 @@
 
     {{select_field . "authAccount.ManagerID" "领导1:" .authAccounts  | render}}
     {{select_field . "authAccount.LeaderID" "领导2:" .authAccounts  | render}}
-    {{text_field . "authAccount.Name" "用户名:" | f_setEditMode .inEditMode  | render}}
+    {{text_field . "authAccount.Name" "用户名:" | f_setReadOnly .inEditMode  | render}}
     {{password_field . "authAccount.Password" "密码:"  | render}}
       {{email_field . "authAccount.Email" "邮箱:"  | render}}
     {{select_field . "authAccount.Sex" "性别:" "[{\"label\":\"男\",\"value\":\"male\"},{\"label\":\"女\",\"value\":\"female\"}]"  | render}}
     {{select_field . "authAccount.Level" "级别:" .global.userLevel  | render}}
     {{textarea_field . "authAccount.Description" "描述:" 3  0 |  render}}
-    {{date_field . "authAccount.Birthday" "生日:" | f_setEditMode .inEditMode  | render}}
+    {{date_field . "authAccount.Birthday" "生日:" | f_setReadOnly .inEditMode  | render}}

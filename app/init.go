@@ -3,6 +3,7 @@ package app
 import (
 	"github.com/revel/revel"
 	"github.com/three-plus-three/forms"
+	"github.com/three-plus-three/modules/environment"
 	"github.com/three-plus-three/web_example/app/libs"
 	"github.com/three-plus-three/web_example/app/models"
 	"github.com/three-plus-three/web_example/app/routes"
@@ -15,7 +16,7 @@ import (
 var Lifecycle *libs.Lifecycle
 
 func init() {
-	web_ext.Init("web_example", "例子", "",
+	web_ext.Init(environment.ENV_WSERVER_PROXY_ID, "例子",
 		func(data *web_ext.Lifecycle) error {
 			//if err := models.DropTables(data.ModelEngine); err != nil {
 			//	return err
@@ -48,10 +49,10 @@ func init() {
 		},
 		func(data *web_ext.Lifecycle) ([]toolbox.Menu, error) {
 			return []toolbox.Menu{
-				{Title: "主页", Name: "Home", URL: routes.Home.Index()},
+				{Title: "主页", UID: "Home", URL: routes.Home.Index()},
 				{Title: "用户", URL: "#", Children: []toolbox.Menu{
-					{Title: "用户账号", Name: "AuthAccounts", URL: routes.AuthAccounts.Index()},
-					{Title: "在线用户", Name: "OnlineUsers", URL: routes.OnlineUsers.Index()},
+					{Title: "用户账号", UID: "AuthAccounts", URL: routes.AuthAccounts.Index()},
+					{Title: "在线用户", UID: "OnlineUsers", URL: routes.OnlineUsers.Index()},
 				}}}, nil
 		})
 
