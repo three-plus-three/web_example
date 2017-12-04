@@ -22,7 +22,7 @@ type OnlineUsers struct {
 
 // Index 列出所有记录
 func (c OnlineUsers) Index() revel.Result {
-	var page = c.pagingParams()
+	var page = c.PagingParams()
 
 	var cond orm.Cond
 	var query string
@@ -110,7 +110,6 @@ func (c OnlineUsers) withAuthAccounts() ([]models.AuthAccount, error) {
 // New 编辑新建记录
 func (c OnlineUsers) New() revel.Result {
 	c.withAuthAccounts()
-
 	return c.Render()
 }
 

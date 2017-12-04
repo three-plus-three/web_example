@@ -82,7 +82,7 @@ func (p PagingParams) Get(total interface{}) *toolbox.Paginator {
 	return toolbox.NewPaginatorWith(p.c.Request.URL, 0, p.Size, total)
 }
 
-func (c *App) pagingParams() PagingParams {
+func (c *App) PagingParams() PagingParams {
 	var pageIndex, pageSize int
 	c.Params.Bind(&pageIndex, "pageIndex")
 	c.Params.Bind(&pageSize, "pageSize")
