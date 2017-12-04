@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"strconv"
+
 	"github.com/runner-mei/orm"
 	"github.com/three-plus-three/modules/toolbox"
 	"github.com/three-plus-three/modules/web_ext"
@@ -71,11 +73,16 @@ func (p PagingParams) Limit() int {
 }
 
 // Get 获取分页对象
-func (p PagingParams) Get(nums interface{}) *toolbox.Paginator {
-	return toolbox.NewPaginator(p.c.Request.Request, p.Size, nums)
+func (p PagingParams) Get(total interface{}) *toolbox.Paginator {
+	form, _ := p.c.Request.GetForm()
+	if form != nil {
+		pageIndex, _ := strconv.Atoi(form.Get("pageIndex"))
+		return toolbox.NewPaginatorWith(p.c.Request.URL, pageIndex, p.Size, total)
+	}
+	return toolbox.NewPaginatorWith(p.c.Request.URL, 0, p.Size, total)
 }
 
-func (c *App) PagingParams() PagingParams {
+func (c *App) pagingParams() PagingParams {
 	var pageIndex, pageSize int
 	c.Params.Bind(&pageIndex, "pageIndex")
 	c.Params.Bind(&pageSize, "pageSize")

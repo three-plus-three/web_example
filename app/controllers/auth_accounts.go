@@ -33,7 +33,7 @@ type AuthAccounts struct {
 
 // Index 列出所有记录
 func (c AuthAccounts) Index() revel.Result {
-	var page = c.PagingParams()
+	var page = c.pagingParams()
 
 	var cond orm.Cond
 	var query string
@@ -145,6 +145,8 @@ func (c AuthAccounts) withAuthAccounts() ([]models.AuthAccount, error) {
 // New 编辑新建记录
 func (c AuthAccounts) New() revel.Result {
 	c.withAuthAccounts()
+	c.withAuthAccounts()
+
 	return c.Render()
 }
 
@@ -177,6 +179,7 @@ func (c AuthAccounts) Edit(id int64) revel.Result {
 		return c.Redirect(routes.AuthAccounts.Index())
 	}
 
+	c.withAuthAccounts()
 	c.withAuthAccounts()
 	return c.Render(authAccount)
 }
