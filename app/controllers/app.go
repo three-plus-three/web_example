@@ -3,7 +3,6 @@ package controllers
 import (
 	"strconv"
 
-	"github.com/runner-mei/orm"
 	"github.com/three-plus-three/modules/toolbox"
 	"github.com/three-plus-three/modules/web_ext"
 	"github.com/three-plus-three/web_example/app"
@@ -18,22 +17,7 @@ type App struct {
 }
 
 func (c *App) ErrorToFlash(err error, notFoundKey ...string) {
-	if err == orm.ErrNotFound {
-		if len(notFoundKey) >= 1 && notFoundKey[0] != "" {
-			c.Flash.Error(revel.Message(c.Request.Locale, notFoundKey[0]))
-		} else {
-			c.Flash.Error(revel.Message(c.Request.Locale, "update.record_not_found"))
-		}
-	} else {
-		if oerr, ok := err.(*orm.Error); ok {
-			for _, validation := range oerr.Validations {
-				c.Validation.Error(validation.Message).
-					Key(validation.Key)
-			}
-			c.Validation.Keep()
-		}
-		c.Flash.Error(err.Error())
-	}
+	web_ext.ErrorToFlash(c.Controller, err, notFoundKey...)
 }
 
 func (c *App) CurrentUser() web_ext.User {
